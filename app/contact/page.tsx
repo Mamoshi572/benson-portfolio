@@ -49,7 +49,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h3 className="font-bold text-gray-900">Email</h3>
-                  <p className="text-gray-600">benson@example.com</p>
+                  <p className="text-gray-600">benshomwiti@gmail.com</p>
                 </div>
               </div>
 
@@ -59,7 +59,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h3 className="font-bold text-gray-900">Phone</h3>
-                  <p className="text-gray-600">+254 712 345 678</p>
+                  <p className="text-gray-600">+254746562072</p>
                 </div>
               </div>
 
@@ -109,7 +109,7 @@ export default function ContactPage() {
                     setFormData({ ...formData, name: e.target.value })
                   }
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="John Doe"
+                  placeholder="Your Name"
                   required
                 />
               </div>
@@ -125,7 +125,7 @@ export default function ContactPage() {
                     setFormData({ ...formData, email: e.target.value })
                   }
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="john@example.com"
+                  placeholder="youremail@gmail.com"
                   required
                 />
               </div>
