@@ -7,12 +7,12 @@ export default function ProjectsPage() {
       category: "Full Stack",
       tech: ["Next.js", "TypeScript", "Node.js", "MongoDB", "Stripe", "AWS"],
       status: "Live",
-      link: "#",
+      link: "https://github.com/Mamoshi572/agriinfo-offline",
     },
     {
-      title: "Healthcare Analytics Dashboard",
-      description:
-        "Real-time data visualization platform for healthcare providers with predictive analytics and HIPAA-compliant security.",
+      title: "AgriInfo offline app",
+      description: 
+        "A Revolutionary Offline-First Agricultural Information Platform",
       category: "Data Visualization",
       tech: ["React", "D3.js", "Python", "PostgreSQL", "Docker", "Redis"],
       status: "Live",
