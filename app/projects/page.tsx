@@ -7,7 +7,7 @@ export default function ProjectsPage() {
       category: "Full Stack",
       tech: ["Next.js", "TypeScript", "Node.js", "MongoDB", "Stripe", "AWS"],
       status: "Live",
-      link: "https://github.com/Mamoshi572/agriinfo-offline",
+      link: "#",
     },
     {
       title: "AgriInfo offline app",
@@ -16,7 +16,7 @@ export default function ProjectsPage() {
       category: "Data Visualization",
       tech: ["React", "D3.js", "Python", "PostgreSQL", "Docker", "Redis"],
       status: "Live",
-      link: "#",
+      link: "https://github.com/Mamoshi572/agriinfo-offline",
     },
     {
       title: "FinTech Mobile Application",

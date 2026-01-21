@@ -151,8 +151,8 @@ export default function Home() {
               },
               {
                 emoji: "📊",
-                title: "Healthcare Dashboard",
-                description: "Real-time data visualization platform",
+                title: "agriinfo offline app",
+                description: "Real-time and offline data visualization platform",
                 tech: ["React", "D3.js", "Python"],
                 color: "green",
               },

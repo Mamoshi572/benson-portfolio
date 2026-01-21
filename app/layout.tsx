@@ -200,7 +200,7 @@ export default function RootLayout({
                 <h3 className="text-xl font-bold mb-4">Contact</h3>
                 <div className="space-y-3 text-gray-400">
                   <p>📍 Nairobi, Kenya</p>
-                  <p>📧 benson@example.com</p>
+                  <p>📧 benshomwiti@gmail.com</p>
                   <p>🌍 Available for remote work</p>
                 </div>
               </div>
