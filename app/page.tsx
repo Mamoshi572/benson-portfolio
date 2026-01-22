@@ -144,8 +144,8 @@ export default function Home() {
             {[
               {
                 emoji: "🛒",
-                title: "E-Commerce Platform",
-                description: "Scalable marketplace with real-time inventory",
+                title: "Greenleaf dispensary Platform",
+                description: "Premium cannabis products",
                 tech: ["Next.js", "TypeScript", "Stripe"],
                 color: "blue",
               },

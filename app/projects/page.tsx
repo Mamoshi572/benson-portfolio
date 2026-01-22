@@ -1,13 +1,13 @@
 export default function ProjectsPage() {
   const projects = [
     {
-      title: "Enterprise E-Commerce Platform",
+      title: "GreanLeaf Dispensary",
       description:
-        "Scalable online marketplace serving 10k+ daily users with real-time inventory, payment processing, and AI-powered recommendations.",
+        "Premium cannabis products",
       category: "Full Stack",
       tech: ["Next.js", "TypeScript", "Node.js", "MongoDB", "Stripe", "AWS"],
       status: "Live",
-      link: "#",
+      link: "https://cannabis-dispensar.vercel.app",
     },
     {
       title: "AgriInfo offline app",
