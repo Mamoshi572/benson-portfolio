@@ -2,22 +2,33 @@ export default function ProjectsPage() {
   const projects = [
     {
       title: "GreanLeaf Dispensary",
-      description:
-        "Premium cannabis products",
+      description: "Premium cannabis products",
       category: "Full Stack",
       tech: ["Next.js", "TypeScript", "Node.js", "MongoDB", "Stripe", "AWS"],
       status: "Live",
       link: "https://cannabis-dispensar.vercel.app",
     },
+
     {
       title: "AgriInfo offline app",
-      description: 
+      description:
         "A Revolutionary Offline-First Agricultural Information Platform",
       category: "Data Visualization",
       tech: ["React", "D3.js", "Python", "PostgreSQL", "Docker", "Redis"],
       status: "Live",
-      link: "https://github.com/Mamoshi572/agriinfo-offline",
+      link: "https://github.com/Mamoshi572/AgriInfoOffline",
     },
+
+    {
+      title: "Professional Modeling & Services Portfolio",
+      description:
+        "Designed and developed a dynamic, responsive portfolio to uniquely market a dual-skill professional in fashion modeling and client services. The site features a clean, modern interface to effectively showcase achievements, services, and professional experience, enhancing the client's online presence and brand cohesion.",
+      category: "Full Stack",
+      tech: ["Next.js", "JavaScript (ES7+)", "HTML5", "vercel"],
+      status: "Live",
+      link: "https://irene-portfolio-alpha.vercel.app",
+    },
+
     {
       title: "FinTech Mobile Application",
       description:
