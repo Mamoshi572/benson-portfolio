@@ -152,10 +152,30 @@ export default function Home() {
               {
                 emoji: "📊",
                 title: "agriinfo offline app",
-                description: "Real-time and offline data visualization platform",
+                description:
+                  "Real-time and offline data visualization platform",
                 tech: ["React", "D3.js", "Python"],
                 color: "green",
               },
+
+              {
+                emoji: "🏝",
+                title: "Professional Modeling & Services Portfolio",
+                description:
+                  "a dynamic, responsive portfolio to uniquely market a dual-skill professional in fashion modeling and client services.",
+                tech: ["Next.js", "vanilla JavaScript (ES7+)", "HTML5", "vercel"],
+                color: "purple",
+              },
+
+{
+                emoji: "🍟",
+                title: "Ashen bites website",
+                description:
+                  "Authentic Kenyan Street Food(Smochas, Mutura, Nyama Choma).",
+                tech: ["Next.js", "JavaScript (ES7+)", "HTML5", "netlify", "CSS3"],
+                color: "red",
+              },
+
               {
                 emoji: "📱",
                 title: "FinTech Mobile App",

@@ -1,6 +1,16 @@
 export default function ProjectsPage() {
   const projects = [
     {
+      title: "Ashen bites website",
+      description:
+        "Authentic Kenyan Street Food(Smochas, Mutura, Nyama Choma).",
+      category: "Frontend(web)",
+      tech: ["Next.js", "JavaScript (ES7+)", "HTML5", "netlify"],
+      status: "Live",
+      link: "https://cool-pony-d2b3a5.netlify.app",
+    },
+
+    {
       title: "GreanLeaf Dispensary",
       description: "Premium cannabis products",
       category: "Full Stack",
