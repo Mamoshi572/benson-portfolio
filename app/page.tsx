@@ -176,6 +176,16 @@ export default function Home() {
                 color: "red",
               },
 
+             {
+              emoji: "👕🎵",
+              title: "Styles N Tunes",
+              description:
+                "A vibrant platform showcasing the intersection of urban streetwear and music culture, featuring exclusive drops and artist collaborations.",
+             tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Vercel"],
+             color: "purple",
+
+            },
+            
               {
                 emoji: "📱",
                 title: "FinTech Mobile App",

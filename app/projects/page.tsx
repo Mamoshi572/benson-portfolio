@@ -4,10 +4,20 @@ export default function ProjectsPage() {
       title: "Ashen bites website",
       description:
         "Authentic Kenyan Street Food(Smochas, Mutura, Nyama Choma).",
-      category: "Frontend(web)",
+      category: "Fullstack",
       tech: ["Next.js", "JavaScript (ES7+)", "HTML5", "netlify"],
       status: "Live",
       link: "https://cool-pony-d2b3a5.netlify.app",
+    },
+
+ {
+      title: "styles n tunes",
+      description:
+        "A vibrant platform showcasing the intersection of urban streetwear and music culture, featuring exclusive drops and artist collaborations.",
+      category: "Frontend",
+      tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Vercel"],
+      status: "Live",
+      link: "https://stylen-tunesrw.vercel.app ",
     },
 
     {
