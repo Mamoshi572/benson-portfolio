@@ -44,7 +44,7 @@ export default function Home() {
                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-full mb-6 border border-gray-200 dark:border-gray-700">
                   <Sparkles className="w-4 h-4 text-yellow-500" />
                   <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                    Open to Opportunities
+                    Open to Remote/on-site/Hybrid Opportunities
                   </span>
                 </div>
 
@@ -154,7 +154,7 @@ export default function Home() {
                     className="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 dark:from-blue-700 dark:to-blue-800 text-white font-medium rounded-lg hover:shadow-xl transition-all shadow flex items-center justify-center gap-2"
                   >
                     <Database size={20} />
-                    View Projects
+                    check out my projects
                     <ArrowRight size={20} />
                   </motion.a>
 
@@ -185,7 +185,7 @@ export default function Home() {
                   <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 p-1 animate-gradient-xy">
                     <div className="relative w-full h-full rounded-full overflow-hidden bg-white dark:bg-gray-900">
                       <Image
-                        src="/images/profile-main.jpg" // Your image path
+                        src="/images/profile/profile-main.jpg"
                         alt="Benson Mwiti - Full Stack Developer & UI/UX Designer"
                         fill
                         sizes="(max-width: 768px) 256px, (max-width: 1024px) 320px, 384px"
