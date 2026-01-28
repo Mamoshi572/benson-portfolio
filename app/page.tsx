@@ -189,7 +189,7 @@ export default function Home() {
                         alt="Benson Mwiti - Full Stack Developer & UI/UX Designer"
                         fill
                         sizes="(max-width: 768px) 256px, (max-width: 1024px) 320px, 384px"
-                        className="object-cover"
+                        className="object-cover object-top"
                         priority
                       />
                     </div>
