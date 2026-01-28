@@ -36,7 +36,7 @@ export default function ProjectsPage() {
       category: "Data Visualization",
       tech: ["React", "D3.js", "Python", "PostgreSQL", "Docker", "Redis"],
       status: "Live",
-      link: "https://github.com/Mamoshi572/AgriInfoOffline",
+      link: "https://agri-info-chi.vercel.app",
     },
 
     {
