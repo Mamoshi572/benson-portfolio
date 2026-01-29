@@ -271,7 +271,7 @@ export default function ProjectsPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                value: "50+",
+                value: "20+",
                 label: "Projects Completed",
                 description: "Across various domains and technologies",
                 color: "blue",
