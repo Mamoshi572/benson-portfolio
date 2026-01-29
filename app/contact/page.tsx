@@ -18,6 +18,7 @@ export default function ContactPage() {
     name: "",
     email: "",
     message: "",
+    projectType: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -26,25 +27,36 @@ export default function ContactPage() {
     e.preventDefault();
     setIsSubmitting(true);
 
+    // Create FormData object
+    const formDataObj = new FormData();
+    formDataObj.append("name", formData.name);
+    formDataObj.append("email", formData.email);
+    formDataObj.append("message", formData.message);
+    if (formData.projectType) {
+      formDataObj.append("projectType", formData.projectType);
+    }
+    formDataObj.append(
+      "_subject",
+      "New Contact Form Submission - Benson Portfolio",
+    );
+    formDataObj.append("_replyto", formData.email);
+    formDataObj.append(
+      "_next",
+      "https://benson-portfolio-flame.vercel.app/contact?success=true",
+    );
+
     try {
-      // Using EmailJS or Formspree for real email functionality
-      // For now, using Formspree - sign up at https://formspree.io/
-      const response = await fetch("https://formspree.io/f/YOUR_FORM_ID", {
+      const response = await fetch("https://formspree.io/f/xdazgdpk", {
         method: "POST",
+        body: formDataObj,
         headers: {
-          "Content-Type": "application/json",
+          Accept: "application/json",
         },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          message: formData.message,
-          _subject: "New Contact Form Submission - Portfolio",
-        }),
       });
 
       if (response.ok) {
         setIsSubmitted(true);
-        setFormData({ name: "", email: "", message: "" });
+        setFormData({ name: "", email: "", message: "", projectType: "" });
 
         // Reset success message after 5 seconds
         setTimeout(() => {
@@ -172,7 +184,7 @@ export default function ContactPage() {
                 </h3>
                 <div className="flex gap-4">
                   <a
-                    href="https://linkedin.com/in/yourusername"
+                    href="https://www.linkedin.com/in/benson-mwiti-87657031b"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-3 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-xl transition"
@@ -180,7 +192,7 @@ export default function ContactPage() {
                     <Linkedin size={20} />
                   </a>
                   <a
-                    href="https://github.com/yourusername"
+                    href="https://github.com/mamoshi572"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-3 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-xl transition"
@@ -211,7 +223,7 @@ export default function ContactPage() {
                 </div>
                 <div className="flex items-center gap-3">
                   <CheckCircle size={20} className="text-green-300" />
-                  <span>Typical response time: 2-4 hours</span>
+                  <span>Typical response time: 30 mins - 1 hour</span>
                 </div>
               </div>
             </motion.div>
@@ -268,7 +280,7 @@ export default function ContactPage() {
                           setFormData({ ...formData, name: e.target.value })
                         }
                         className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition text-gray-900 dark:text-white"
-                        placeholder="John Doe"
+                        placeholder="Your name"
                         required
                       />
                     </div>
@@ -284,7 +296,7 @@ export default function ContactPage() {
                           setFormData({ ...formData, email: e.target.value })
                         }
                         className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition text-gray-900 dark:text-white"
-                        placeholder="john@example.com"
+                        placeholder="youremail.com"
                         required
                       />
                     </div>
@@ -292,7 +304,7 @@ export default function ContactPage() {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Project Type
+                      Project Type (Optional)
                     </label>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
                       {[
@@ -306,6 +318,13 @@ export default function ContactPage() {
                             type="radio"
                             name="projectType"
                             value={type}
+                            checked={formData.projectType === type}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                projectType: e.target.value,
+                              })
+                            }
                             className="text-blue-600"
                           />
                           <span className="text-sm text-gray-700 dark:text-gray-300">
@@ -378,8 +397,8 @@ export default function ContactPage() {
                     What's your typical response time?
                   </h4>
                   <p className="text-gray-600 dark:text-gray-300">
-                    I typically respond within 2-4 hours during business hours
-                    (GMT+3). For urgent matters, please include "URGENT" in your
+                    I typically respond within 30 mins - 1 hour during business
+                    hours. For urgent matters, please include "URGENT" in your
                     message subject.
                   </p>
                 </div>

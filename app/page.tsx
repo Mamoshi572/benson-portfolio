@@ -134,7 +134,7 @@ export default function Home() {
                   className="flex items-center gap-4 mb-8"
                 >
                   <a
-                    href="https://github.com/yourusername"
+                    href="https://github.com/mamoshi572"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-2 bg-gray-100 dark:bg-gray-800 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
@@ -142,7 +142,7 @@ export default function Home() {
                     <Github className="w-5 h-5 text-gray-700 dark:text-gray-300" />
                   </a>
                   <a
-                    href="https://linkedin.com/in/yourusername"
+                    href="https://www.linkedin.com/in/benson-mwiti-87657031b"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-2 bg-gray-100 dark:bg-gray-800 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
@@ -150,7 +150,7 @@ export default function Home() {
                     <Linkedin className="w-5 h-5 text-gray-700 dark:text-gray-300" />
                   </a>
                   <a
-                    href="mailto:hello@bensonmwiti.com"
+                    href="mailto:benshomwiti@gmail.com"
                     className="p-2 bg-gray-100 dark:bg-gray-800 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                   >
                     <Mail className="w-5 h-5 text-gray-700 dark:text-gray-300" />
