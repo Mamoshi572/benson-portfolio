@@ -76,6 +76,13 @@ export default function RootLayout({
                   Contact
                 </Link>
 
+                <Link
+                  href="/testimonial"
+                  className="hover:text-blue-600 dark:hover:text-blue-400 transition"
+                >
+                  testimonial
+                </Link>
+
                 {/* Theme Toggle */}
                 <button
                   onClick={() => setIsDark(!isDark)}

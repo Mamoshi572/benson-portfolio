@@ -119,8 +119,8 @@ export default function ProjectsPage() {
           className="text-center mb-16"
         >
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-4">
-            Featured{" "}
-            <span className="text-blue-600 dark:text-blue-400">Projects</span>
+            Solutions{" "}
+            <span className="text-blue-600 dark:text-blue-400">Enginereed</span>
           </h1>
           <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
             Selected works showcasing technical expertise and problem-solving

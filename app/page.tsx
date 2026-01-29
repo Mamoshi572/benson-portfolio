@@ -165,7 +165,7 @@ export default function Home() {
                   className="grid grid-cols-3 gap-4 mb-10"
                 >
                   {[
-                    { value: "50+", label: "Projects", color: "blue" },
+                    { value: "20+", label: "Projects", color: "blue" },
                     { value: "5+", label: "Years Exp", color: "purple" },
                     { value: "100%", label: "Satisfaction", color: "green" },
                   ].map((stat, index) => (
