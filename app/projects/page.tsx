@@ -6,6 +6,19 @@ import Image from "next/image";
 
 export default function ProjectsPage() {
   const projects = [
+   
+   {
+  title: "Soma Analytics Dashboard",
+  description: "Real-time Kenyan business analytics dashboard with interactive charts, revenue tracking, and transaction management. Built specifically for Kenyan enterprises with local context and KES currency.",
+  category: "Fullstack Dashboard",
+  tech: ["Next.js 14", "TypeScript", "React", "CSS-in-JS", "Vercel", "GitHub Actions"],
+  status: "Live",
+  link: "https://soma-analytics.vercel.app",
+  emoji: "📊🇰🇪",
+  features: ["Real-time Analytics", "KES Currency", "Nairobi Timezone", "Responsive Design", "Interactive Charts"],
+  github: "https://github.com/mamoshi572/soma-analytics",
+},
+   
     {
       title: "Ashen Bites Website",
       description:
@@ -18,6 +31,7 @@ export default function ProjectsPage() {
       features: ["Online Ordering", "Menu Management", "Responsive Design"],
       github: "#",
     },
+    
     {
       title: "Styles N Tunes",
       description:
