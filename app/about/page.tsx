@@ -111,7 +111,7 @@ export default function AboutPage() {
 
   const stats = [
     {
-      value: "50+",
+      value: "40+",
       label: "Projects Delivered",
       icon: <Rocket className="w-5 h-5" />,
       color: "text-blue-600",
