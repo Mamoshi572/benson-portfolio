@@ -8,6 +8,19 @@ export default function ProjectsPage() {
   const projects = [
    
    {
+  title: "Interactive Birthday Celebration",
+  description: "A dynamic, full-stack birthday countdown and celebration website featuring real-time countdown, live wish board, interactive games, and integrated M-Pesa gifting—built for my own birthday!",
+  category: "Full Stack",
+  tech: ["Next.js 15", "TypeScript", "React", "Tailwind CSS", "Vercel"],
+  status: "Live",
+  link: "https://https://birthday-project-phi.vercel.app", 
+  emoji: "🎉🎂",
+  features: ["Live Countdown", "Real-time Wishes", "Interactive Quiz", "M-Pesa Integration", "Responsive Design"],
+  github: "https://github.com/mamoshi572/birthday-project", 
+},
+   
+   
+    {
   title: "Soma Analytics Dashboard",
   description: "Real-time Kenyan business analytics dashboard with interactive charts, revenue tracking, and transaction management. Built specifically for Kenyan enterprises with local context and KES currency.",
   category: "Fullstack Dashboard",
