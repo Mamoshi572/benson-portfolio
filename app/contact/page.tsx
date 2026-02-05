@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   Send,
@@ -11,21 +11,125 @@ import {
   CheckCircle,
   Linkedin,
   Github,
+  AlertCircle,
+  User,
+  MessageSquare,
 } from "lucide-react";
 
 export default function ContactPage() {
+  // Form state
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
     projectType: "",
   });
+
+  // Validation errors
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+
+  // Submission state
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
+  // Validation rules
+  const validateField = (name: string, value: string) => {
+    switch (name) {
+      case "name":
+        if (!value.trim()) return "Name is required";
+        if (value.length < 2) return "Name must be at least 2 characters";
+        if (value.length > 50) return "Name is too long";
+        return "";
+
+      case "email":
+        if (!value.trim()) return "Email is required";
+        if (!/^\S+@\S+\.\S+$/.test(value)) return "Please enter a valid email";
+        return "";
+
+      case "message":
+        if (!value.trim()) return "Message is required";
+        if (value.length < 10) return "Message must be at least 10 characters";
+        if (value.length > 1000) return "Message is too long";
+        return "";
+
+      default:
+        return "";
+    }
+  };
+
+  // Validate entire form
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+
+    Object.keys(formData).forEach((field) => {
+      if (field !== "projectType") {
+        // projectType is optional
+        const error = validateField(
+          field,
+          formData[field as keyof typeof formData],
+        );
+        if (error) newErrors[field] = error;
+      }
+    });
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // Handle field blur
+  const handleBlur = (field: string) => {
+    setTouched({ ...touched, [field]: true });
+    const error = validateField(
+      field,
+      formData[field as keyof typeof formData],
+    );
+    setErrors({ ...errors, [field]: error });
+  };
+
+  // Handle input change
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors({ ...errors, [name]: "" });
+    }
+  };
+
+  // Handle radio change
+  const handleRadioChange = (value: string) => {
+    setFormData({ ...formData, projectType: value });
+  };
+
+  // Form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setTouched({
+      name: true,
+      email: true,
+      message: true,
+      projectType: true,
+    });
+
+    if (!validateForm()) {
+      // Scroll to first error
+      const firstError = Object.keys(errors)[0];
+      if (firstError) {
+        document.getElementById(firstError)?.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+      }
+      return;
+    }
+
     setIsSubmitting(true);
+    setSubmitError("");
 
     // Create FormData object
     const formDataObj = new FormData();
@@ -37,7 +141,7 @@ export default function ContactPage() {
     }
     formDataObj.append(
       "_subject",
-      "New Contact Form Submission - Benson Portfolio",
+      `New Contact Form Submission - ${formData.name}`,
     );
     formDataObj.append("_replyto", formData.email);
     formDataObj.append(
@@ -57,21 +161,46 @@ export default function ContactPage() {
       if (response.ok) {
         setIsSubmitted(true);
         setFormData({ name: "", email: "", message: "", projectType: "" });
+        setErrors({});
+        setTouched({});
 
-        // Reset success message after 5 seconds
+        // Reset success message after 8 seconds
         setTimeout(() => {
           setIsSubmitted(false);
-        }, 5000);
+        }, 8000);
       } else {
-        alert("Something went wrong. Please try again.");
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Submission failed");
       }
     } catch (error) {
-      alert("Failed to send message. Please try again.");
+      console.error("Form submission error:", error);
+      setSubmitError(
+        error instanceof Error
+          ? error.message
+          : "Failed to send message. Please try again or email me directly.",
+      );
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  // Character counter for message
+  const messageLength = formData.message.length;
+  const messageMaxLength = 1000;
+
+  // Check if form is valid for submission
+  const isFormValid = () => {
+    return (
+      formData.name.trim() &&
+      formData.email.trim() &&
+      formData.message.trim() &&
+      !errors.name &&
+      !errors.email &&
+      !errors.message
+    );
+  };
+
+  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -92,6 +221,14 @@ export default function ContactPage() {
       },
     },
   };
+
+  // Project types
+  const projectTypes = [
+    { id: "web", label: "Web App", icon: "🌐" },
+    { id: "mobile", label: "Mobile App", icon: "📱" },
+    { id: "design", label: "UI/UX Design", icon: "🎨" },
+    { id: "consult", label: "Consultation", icon: "💡" },
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 py-20">
@@ -188,6 +325,7 @@ export default function ContactPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-3 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-xl transition"
+                    aria-label="LinkedIn Profile"
                   >
                     <Linkedin size={20} />
                   </a>
@@ -196,6 +334,7 @@ export default function ContactPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-3 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-xl transition"
+                    aria-label="GitHub Profile"
                   >
                     <Github size={20} />
                   </a>
@@ -253,105 +392,251 @@ export default function ContactPage() {
                     />
                   </div>
                   <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                    Message Sent!
+                    Message Sent Successfully!
                   </h3>
                   <p className="text-gray-600 dark:text-gray-300 mb-4">
-                    Thank you for reaching out. I'll get back to you within 24
-                    hours.
+                    Thank you for reaching out, <strong>{formData.name}</strong>
+                    ! I've received your message and will get back to you within
+                    24 hours.
                   </p>
+                  <div className="space-y-2 text-sm text-gray-500 dark:text-gray-400">
+                    <p>
+                      📧 A confirmation email has been sent to {formData.email}
+                    </p>
+                    <p>⏳ Expected response time: 1-24 hours</p>
+                  </div>
                   <button
                     onClick={() => setIsSubmitted(false)}
-                    className="text-blue-600 dark:text-blue-400 hover:underline"
+                    className="mt-6 px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition"
                   >
-                    Send another message
+                    Send Another Message
                   </button>
                 </motion.div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        Your Name *
-                      </label>
+                <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+                  {/* Name Field */}
+                  <div>
+                    <label
+                      htmlFor="name"
+                      className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 flex items-center gap-2"
+                    >
+                      <User size={16} />
+                      Your Name *
+                    </label>
+                    <div className="relative">
                       <input
+                        id="name"
+                        name="name"
                         type="text"
                         value={formData.name}
-                        onChange={(e) =>
-                          setFormData({ ...formData, name: e.target.value })
+                        onChange={handleChange}
+                        onBlur={() => handleBlur("name")}
+                        className={`w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition text-gray-900 dark:text-white ${
+                          errors.name && touched.name
+                            ? "border-red-500 dark:border-red-500"
+                            : "border-gray-300 dark:border-gray-600"
+                        }`}
+                        placeholder="Enter your full name"
+                        aria-invalid={errors.name ? "true" : "false"}
+                        aria-describedby={
+                          errors.name ? "name-error" : undefined
                         }
-                        className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition text-gray-900 dark:text-white"
-                        placeholder="Your name"
-                        required
                       />
+                      {errors.name && touched.name && (
+                        <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                          <AlertCircle className="w-5 h-5 text-red-500" />
+                        </div>
+                      )}
                     </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        Email Address *
-                      </label>
-                      <input
-                        type="email"
-                        value={formData.email}
-                        onChange={(e) =>
-                          setFormData({ ...formData, email: e.target.value })
-                        }
-                        className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition text-gray-900 dark:text-white"
-                        placeholder="youremail.com"
-                        required
-                      />
-                    </div>
+                    {errors.name && touched.name && (
+                      <p
+                        id="name-error"
+                        className="mt-2 text-sm text-red-600 dark:text-red-400 flex items-center gap-1"
+                      >
+                        <AlertCircle size={14} />
+                        {errors.name}
+                      </p>
+                    )}
                   </div>
 
+                  {/* Email Field */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 flex items-center gap-2"
+                    >
+                      <Mail size={16} />
+                      Email Address *
+                    </label>
+                    <div className="relative">
+                      <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        onBlur={() => handleBlur("email")}
+                        className={`w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition text-gray-900 dark:text-white ${
+                          errors.email && touched.email
+                            ? "border-red-500 dark:border-red-500"
+                            : "border-gray-300 dark:border-gray-600"
+                        }`}
+                        placeholder="you@example.com"
+                        aria-invalid={errors.email ? "true" : "false"}
+                        aria-describedby={
+                          errors.email ? "email-error" : undefined
+                        }
+                      />
+                      {errors.email && touched.email && (
+                        <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                          <AlertCircle className="w-5 h-5 text-red-500" />
+                        </div>
+                      )}
+                    </div>
+                    {errors.email && touched.email && (
+                      <p
+                        id="email-error"
+                        className="mt-2 text-sm text-red-600 dark:text-red-400 flex items-center gap-1"
+                      >
+                        <AlertCircle size={14} />
+                        {errors.email}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Project Type */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
                       Project Type (Optional)
                     </label>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
-                      {[
-                        "Web App",
-                        "Mobile App",
-                        "UI/UX Design",
-                        "Consultation",
-                      ].map((type) => (
-                        <label key={type} className="flex items-center gap-2">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                      {projectTypes.map((type) => (
+                        <label
+                          key={type.id}
+                          className={`
+                            relative flex flex-col items-center p-4 border rounded-xl cursor-pointer transition-all
+                            ${
+                              formData.projectType === type.label
+                                ? "bg-blue-50 dark:bg-blue-900/20 border-blue-500 dark:border-blue-500"
+                                : "bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500"
+                            }
+                          `}
+                        >
                           <input
                             type="radio"
                             name="projectType"
-                            value={type}
-                            checked={formData.projectType === type}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                projectType: e.target.value,
-                              })
-                            }
-                            className="text-blue-600"
+                            value={type.label}
+                            checked={formData.projectType === type.label}
+                            onChange={() => handleRadioChange(type.label)}
+                            className="sr-only"
                           />
-                          <span className="text-sm text-gray-700 dark:text-gray-300">
-                            {type}
+                          <span className="text-2xl mb-2">{type.icon}</span>
+                          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                            {type.label}
                           </span>
+                          {formData.projectType === type.label && (
+                            <div className="absolute -top-1 -right-1 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
+                              <CheckCircle className="w-4 h-4 text-white" />
+                            </div>
+                          )}
                         </label>
                       ))}
                     </div>
                   </div>
 
+                  {/* Message Field */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <label
+                      htmlFor="message"
+                      className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 flex items-center gap-2"
+                    >
+                      <MessageSquare size={16} />
                       Your Message *
                     </label>
-                    <textarea
-                      value={formData.message}
-                      onChange={(e) =>
-                        setFormData({ ...formData, message: e.target.value })
-                      }
-                      rows={5}
-                      className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition text-gray-900 dark:text-white"
-                      placeholder="Tell me about your project, timeline, and budget..."
-                      required
-                    />
+                    <div className="relative">
+                      <textarea
+                        id="message"
+                        name="message"
+                        value={formData.message}
+                        onChange={handleChange}
+                        onBlur={() => handleBlur("message")}
+                        rows={5}
+                        className={`w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition text-gray-900 dark:text-white resize-none ${
+                          errors.message && touched.message
+                            ? "border-red-500 dark:border-red-500"
+                            : "border-gray-300 dark:border-gray-600"
+                        }`}
+                        placeholder="Tell me about your project, timeline, budget, and any specific requirements..."
+                        aria-invalid={errors.message ? "true" : "false"}
+                        aria-describedby={
+                          errors.message ? "message-error" : "message-help"
+                        }
+                      />
+                      {errors.message && touched.message && (
+                        <div className="absolute right-3 top-3">
+                          <AlertCircle className="w-5 h-5 text-red-500" />
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex justify-between items-center mt-2">
+                      {errors.message && touched.message ? (
+                        <p
+                          id="message-error"
+                          className="text-sm text-red-600 dark:text-red-400 flex items-center gap-1"
+                        >
+                          <AlertCircle size={14} />
+                          {errors.message}
+                        </p>
+                      ) : (
+                        <p
+                          id="message-help"
+                          className="text-sm text-gray-500 dark:text-gray-400"
+                        >
+                          Minimum 10 characters required
+                        </p>
+                      )}
+                      <div
+                        className={`text-sm ${
+                          messageLength > messageMaxLength * 0.9
+                            ? "text-red-600 dark:text-red-400"
+                            : messageLength > messageMaxLength * 0.75
+                              ? "text-yellow-600 dark:text-yellow-400"
+                              : "text-gray-500 dark:text-gray-400"
+                        }`}
+                      >
+                        {messageLength}/{messageMaxLength}
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="flex items-center justify-between">
+                  {/* Submit Error */}
+                  {submitError && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4"
+                    >
+                      <div className="flex items-center gap-2 text-red-700 dark:text-red-400">
+                        <AlertCircle size={20} />
+                        <p className="font-medium">Submission Error</p>
+                      </div>
+                      <p className="mt-1 text-sm text-red-600 dark:text-red-300">
+                        {submitError}
+                      </p>
+                      <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                        You can also email me directly at{" "}
+                        <a
+                          href="mailto:benshomwiti@gmail.com"
+                          className="text-blue-600 dark:text-blue-400 hover:underline"
+                        >
+                          benshomwiti@gmail.com
+                        </a>
+                      </p>
+                    </motion.div>
+                  )}
+
+                  {/* Form Actions */}
+                  <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-gray-200 dark:border-gray-700">
                     <div className="text-sm text-gray-500 dark:text-gray-400">
                       * Required fields
                     </div>
@@ -359,10 +644,16 @@ export default function ContactPage() {
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       type="submit"
-                      disabled={isSubmitting}
-                      className={`px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold rounded-lg hover:from-blue-700 hover:to-blue-800 transition flex items-center gap-2 ${
-                        isSubmitting ? "opacity-70 cursor-not-allowed" : ""
-                      }`}
+                      disabled={isSubmitting || !isFormValid()}
+                      className={`
+                        px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold rounded-lg
+                        hover:from-blue-700 hover:to-blue-800 transition flex items-center gap-2
+                        ${
+                          isSubmitting || !isFormValid()
+                            ? "opacity-70 cursor-not-allowed"
+                            : "shadow-lg hover:shadow-xl"
+                        }
+                      `}
                     >
                       {isSubmitting ? (
                         <>
@@ -398,8 +689,8 @@ export default function ContactPage() {
                   </h4>
                   <p className="text-gray-600 dark:text-gray-300">
                     I typically respond within 30 mins - 1 hour during business
-                    hours. For urgent matters, please include "URGENT" in your
-                    message subject.
+                    hours (9 AM - 6 PM EAT). For urgent matters, please include
+                    "URGENT" in your message.
                   </p>
                 </div>
                 <div>
