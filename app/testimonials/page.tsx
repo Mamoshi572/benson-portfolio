@@ -1,16 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import {
-  Quote,
-  Star,
-  Building,
-  Globe,
-  Award,
-  Clock,
-  Users,
-  TrendingUp,
-} from "lucide-react";
+import { Quote, Star, Users, Clock, Award, TrendingUp } from "lucide-react";
 import Link from "next/link";
 
 export default function TestimonialsPage() {
