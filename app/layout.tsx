@@ -545,11 +545,8 @@ export default function RootLayout({
               <p className="text-sm mt-2">
                 Built with Next.js, TypeScript & Tailwind CSS •
                 <span className="mx-2">•</span>
-                Deployed on Vercel
               </p>
-              <p className="text-xs mt-2 text-gray-500">
-                Performance optimized • Lighthouse score: 95+
-              </p>
+              <p className="text-xs mt-2 text-gray-500"></p>
             </div>
           </div>
         </footer>
