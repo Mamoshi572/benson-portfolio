@@ -15,6 +15,31 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 
+// Helper functions for dynamic colors
+const getGradientColor = (color: string) => {
+  const colorMap: Record<string, string> = {
+    blue: "from-blue-500 to-blue-600",
+    green: "from-green-500 to-green-600",
+    purple: "from-purple-500 to-purple-600",
+    pink: "from-pink-500 to-pink-600",
+    yellow: "from-yellow-500 to-yellow-600",
+    orange: "from-orange-500 to-orange-600",
+  };
+  return colorMap[color] || "from-blue-500 to-blue-600";
+};
+
+const getSolidColor = (color: string) => {
+  const colorMap: Record<string, string> = {
+    blue: "bg-blue-500",
+    green: "bg-green-500",
+    purple: "bg-purple-500",
+    pink: "bg-pink-500",
+    yellow: "bg-yellow-500",
+    orange: "bg-orange-500",
+  };
+  return colorMap[color] || "bg-blue-500";
+};
+
 export default function AboutPage() {
   const skills = [
     {
@@ -345,27 +370,118 @@ export default function AboutPage() {
             </motion.div>
           </div>
 
-          {/* Skills Section */}
+          {/* Skills Section - ENHANCED WITH PROGRESS BARS */}
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
             className="mb-20"
           >
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
                 Technical{" "}
                 <span className="text-blue-600 dark:text-blue-400">
-                  Expertise
+                  Proficiency
                 </span>
               </h2>
               <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-                A comprehensive toolkit of technologies and methodologies I use
-                to build exceptional products
+                A comprehensive toolkit of technologies I use to build
+                exceptional products, with proficiency levels based on years of
+                experience
               </p>
             </div>
 
+            {/* Progress Bars for Top Skills */}
+            <div className="mb-12 bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-100 dark:border-gray-700">
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+                Core Expertise
+              </h3>
+
+              <div className="space-y-8">
+                {[
+                  {
+                    name: "React / Next.js",
+                    level: 95,
+                    color: "blue",
+                    years: "5+ years",
+                  },
+                  {
+                    name: "TypeScript",
+                    level: 90,
+                    color: "blue",
+                    years: "4+ years",
+                  },
+                  {
+                    name: "Node.js / Express",
+                    level: 88,
+                    color: "green",
+                    years: "4+ years",
+                  },
+                  {
+                    name: "UI/UX Design",
+                    level: 85,
+                    color: "pink",
+                    years: "4+ years",
+                  },
+                  {
+                    name: "MongoDB / PostgreSQL",
+                    level: 82,
+                    color: "purple",
+                    years: "3+ years",
+                  },
+                  {
+                    name: "AWS / Cloud Services",
+                    level: 78,
+                    color: "orange",
+                    years: "3+ years",
+                  },
+                ].map((skill, index) => (
+                  <motion.div
+                    key={skill.name}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    className="space-y-3"
+                  >
+                    <div className="flex justify-between items-center">
+                      <div className="flex items-center gap-3">
+                        <div
+                          className={`w-3 h-3 rounded-full ${getSolidColor(skill.color)}`}
+                        />
+                        <span className="font-medium text-gray-900 dark:text-white">
+                          {skill.name}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <span className="text-sm text-gray-500 dark:text-gray-400">
+                          {skill.years}
+                        </span>
+                        <span className="font-bold text-gray-900 dark:text-white">
+                          {skill.level}%
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="h-3 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        whileInView={{ width: `${skill.level}%` }}
+                        viewport={{ once: true }}
+                        transition={{
+                          duration: 1,
+                          delay: index * 0.1 + 0.3,
+                          ease: "easeOut",
+                        }}
+                        className={`h-full rounded-full bg-gradient-to-r ${getGradientColor(skill.color)}`}
+                      />
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            {/* Enhanced Skills Grid with Categories */}
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {skills.map((skillGroup, index) => (
                 <motion.div
@@ -379,14 +495,14 @@ export default function AboutPage() {
                 >
                   <div
                     className={`
-  w-12 h-12 rounded-xl flex items-center justify-center mb-4
-  ${skillGroup.color === "blue" ? "bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400" : ""}
-  ${skillGroup.color === "green" ? "bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400" : ""}
-  ${skillGroup.color === "purple" ? "bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400" : ""}
-  ${skillGroup.color === "pink" ? "bg-pink-100 dark:bg-pink-900/30 text-pink-600 dark:text-pink-400" : ""}
-  ${skillGroup.color === "yellow" ? "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400" : ""}
-  ${skillGroup.color === "orange" ? "bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400" : ""}
-`}
+                    w-12 h-12 rounded-xl flex items-center justify-center mb-4
+                    ${skillGroup.color === "blue" ? "bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400" : ""}
+                    ${skillGroup.color === "green" ? "bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400" : ""}
+                    ${skillGroup.color === "purple" ? "bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400" : ""}
+                    ${skillGroup.color === "pink" ? "bg-pink-100 dark:bg-pink-900/30 text-pink-600 dark:text-pink-400" : ""}
+                    ${skillGroup.color === "yellow" ? "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400" : ""}
+                    ${skillGroup.color === "orange" ? "bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400" : ""}
+                  `}
                   >
                     {skillGroup.icon}
                   </div>
