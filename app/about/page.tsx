@@ -378,7 +378,15 @@ export default function AboutPage() {
                   className="group bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all border border-gray-100 dark:border-gray-700"
                 >
                   <div
-                    className={`w-12 h-12 bg-${skillGroup.color}-100 dark:bg-${skillGroup.color}-900/30 text-${skillGroup.color}-600 dark:text-${skillGroup.color}-400 rounded-xl flex items-center justify-center mb-4`}
+                    className={`
+  w-12 h-12 rounded-xl flex items-center justify-center mb-4
+  ${skillGroup.color === "blue" ? "bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400" : ""}
+  ${skillGroup.color === "green" ? "bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400" : ""}
+  ${skillGroup.color === "purple" ? "bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400" : ""}
+  ${skillGroup.color === "pink" ? "bg-pink-100 dark:bg-pink-900/30 text-pink-600 dark:text-pink-400" : ""}
+  ${skillGroup.color === "yellow" ? "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400" : ""}
+  ${skillGroup.color === "orange" ? "bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400" : ""}
+`}
                   >
                     {skillGroup.icon}
                   </div>
