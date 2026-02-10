@@ -9,7 +9,7 @@ export default function TestimonialsPage() {
     {
       content:
         "Benson transformed our e-commerce platform with exceptional attention to detail. The user engagement increased by 40% after his redesign and optimization.",
-      author: "Alex Kamau",
+      author: "Ashen haze",
       role: "CEO, Ashen Bites",
       company: "Ashen Bites",
       rating: 5,
@@ -39,17 +39,17 @@ export default function TestimonialsPage() {
     {
       content:
         "Benson's full-stack expertise saved us months of development time. His architecture decisions have made our platform incredibly scalable.",
-      author: "David Mwangi",
+      author: "Fred Michubu",
       role: "CTO",
       company: "AgriTech Solutions",
       rating: 5,
       project: "AgriInfo Offline App",
-      link: "https://agri-info-chi.vercel.app",
+      link: "https://agri-info-eosin.vercel.app",
     },
     {
       content:
-        "As a modeling agency, we needed a portfolio that stood out. Benson delivered beyond expectations with a design that perfectly captures our brand.",
-      author: "Irene Wambui",
+        "As a modeling agency, I needed a portfolio that stood out. Benson delivered beyond expectations with a design that perfectly captures our brand.",
+      author: "Irene Chege Kagwiria",
       role: "Model & Services Director",
       company: "Irene Portfolio",
       rating: 5,
@@ -59,7 +59,7 @@ export default function TestimonialsPage() {
     {
       content:
         "The birthday celebration website was a technical marvel. Real-time features, M-Pesa integration, and flawless performance under heavy traffic.",
-      author: "Festus Kiprotich",
+      author: "Benson Mwiti",
       role: "Event Coordinator",
       rating: 5,
       project: "Interactive Birthday Platform",
