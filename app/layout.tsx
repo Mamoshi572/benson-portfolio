@@ -4,7 +4,18 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import { useState, useEffect, Suspense } from "react";
-import { Sun, Moon, Menu, X, Code2, Loader2 } from "lucide-react";
+import {
+  Sun,
+  Moon,
+  Menu,
+  X,
+  Code2,
+  Loader2,
+  MessageSquare,
+  XCircle,
+  Send,
+} from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -24,8 +35,227 @@ function LoadingSpinner() {
   );
 }
 
+// WhatsApp Button Component
+function WhatsAppButton() {
+  const phoneNumber = "254746562072"; // Your phone number from footer
+  const message =
+    "Hi Benson, I saw your portfolio and would like to discuss a project.";
+  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+  return (
+    <a
+      href={whatsappUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition-all z-40 flex items-center gap-2 group"
+      aria-label="Contact Benson on WhatsApp"
+      title="Chat on WhatsApp"
+    >
+      <FaWhatsapp
+        size={24}
+        className="group-hover:scale-110 transition-transform"
+      />
+      <span className="hidden md:inline font-medium text-sm">Chat Now</span>
+    </a>
+  );
+}
+
+// Chatbot Component
+function ChatWindow() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [messages, setMessages] = useState<
+    Array<{ role: string; content: string }>
+  >([]);
+  const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!input.trim()) return;
+
+    const userMessage = input;
+    setInput("");
+    setMessages((prev) => [...prev, { role: "user", content: userMessage }]);
+    setIsLoading(true);
+
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages: [...messages, { role: "user", content: userMessage }],
+        }),
+      });
+
+      if (!response.ok) throw new Error("API request failed");
+
+      const data = await response.json();
+      setMessages((prev) => [
+        ...prev,
+        { role: "assistant", content: data.message },
+      ]);
+    } catch (error) {
+      console.error("Chat error:", error);
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          content:
+            "I apologize, but I'm having trouble connecting. Please contact Benson directly via WhatsApp or email for immediate assistance.",
+        },
+      ]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDemoResponse = () => {
+    setMessages([
+      {
+        role: "assistant",
+        content:
+          "Hi! I'm Benson's portfolio assistant. I can tell you about his projects, skills, and experience. Try asking:",
+      },
+      {
+        role: "assistant",
+        content:
+          "• 'What projects has Benson built?'\n• 'What is his tech stack?'\n• 'How can I contact him?'",
+      },
+    ]);
+  };
+
+  useEffect(() => {
+    if (isOpen && messages.length === 0) {
+      handleDemoResponse();
+    }
+  }, [isOpen]);
+
+  return (
+    <>
+      {/* Chat Toggle Button */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="fixed bottom-32 right-6 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-all z-40 flex items-center justify-center group"
+        aria-label="Open AI Chat Assistant"
+        title="Ask me about Benson's work"
+      >
+        {isOpen ? (
+          <XCircle
+            size={22}
+            className="group-hover:rotate-90 transition-transform"
+          />
+        ) : (
+          <MessageSquare size={22} />
+        )}
+      </button>
+
+      {/* Chat Window */}
+      {isOpen && (
+        <div className="fixed bottom-48 right-6 w-96 max-w-[calc(100vw-3rem)] h-[32rem] bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 flex flex-col z-40 overflow-hidden">
+          {/* Header */}
+          <div className="p-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white">
+            <div className="flex items-center gap-3">
+              <div className="bg-white/20 p-2 rounded-lg">
+                <MessageSquare size={20} />
+              </div>
+              <div>
+                <h3 className="font-bold text-lg">Portfolio Assistant</h3>
+                <p className="text-sm opacity-90">
+                  Ask me about Benson&apos;s work!
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Messages Container */}
+          <div className="flex-1 overflow-y-auto p-4 bg-gray-50 dark:bg-gray-900">
+            {messages.length === 0 ? (
+              <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+                <div className="inline-block p-3 bg-blue-100 dark:bg-blue-900 rounded-full mb-3">
+                  <MessageSquare
+                    size={24}
+                    className="text-blue-600 dark:text-blue-400"
+                  />
+                </div>
+                <p className="font-medium">Hi! I can tell you about:</p>
+                <ul className="text-sm mt-2 space-y-1">
+                  <li>• Benson&apos;s projects & skills</li>
+                  <li>• Tech stack experience</li>
+                  <li>• How to contact him</li>
+                </ul>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {messages.map((m, index) => (
+                  <div
+                    key={index}
+                    className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
+                  >
+                    <div
+                      className={`max-w-[80%] rounded-2xl px-4 py-3 ${
+                        m.role === "user"
+                          ? "bg-blue-600 text-white rounded-br-none"
+                          : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-bl-none"
+                      }`}
+                    >
+                      <p className="whitespace-pre-wrap">{m.content}</p>
+                    </div>
+                  </div>
+                ))}
+                {isLoading && (
+                  <div className="flex justify-start">
+                    <div className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-2xl rounded-bl-none px-4 py-3">
+                      <div className="flex gap-1">
+                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" />
+                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-100" />
+                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-200" />
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* Input Form */}
+          <form
+            onSubmit={handleSubmit}
+            className="border-t border-gray-200 dark:border-gray-700 p-4 bg-white dark:bg-gray-800"
+          >
+            <div className="flex gap-2">
+              <input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Ask about projects, skills, or contact..."
+                className="flex-1 border border-gray-300 dark:border-gray-600 rounded-full px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
+                disabled={isLoading}
+              />
+              <button
+                type="submit"
+                disabled={!input.trim() || isLoading}
+                className="bg-blue-600 text-white p-3 rounded-full hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                <Send size={18} />
+              </button>
+            </div>
+            <p className="text-xs text-gray-500 dark:text-gray-400 text-center mt-3">
+              AI assistant •{" "}
+              <a
+                href="/contact"
+                className="text-blue-600 dark:text-blue-400 hover:underline"
+              >
+                Contact directly
+              </a>{" "}
+              for detailed inquiries
+            </p>
+          </form>
+        </div>
+      )}
+    </>
+  );
+}
+
 // Static metadata (for server component if you separate it)
-// This would go in a separate layout.server.tsx or page.tsx
 const METADATA = {
   title: "Benson Mwiti - Full Stack Engineer & UI/UX Designer",
   description:
@@ -433,6 +663,12 @@ export default function RootLayout({
           </Suspense>
         )}
 
+        {/* WhatsApp Button */}
+        <WhatsAppButton />
+
+        {/* AI Chatbot */}
+        <ChatWindow />
+
         {/* Footer */}
         <footer
           className="bg-gray-900 dark:bg-black text-white py-12"
@@ -545,8 +781,19 @@ export default function RootLayout({
               <p className="text-sm mt-2">
                 Built with Next.js, TypeScript & Tailwind CSS •
                 <span className="mx-2">•</span>
+                <a
+                  href="https://wa.me/254746562072"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-green-400 hover:text-green-300"
+                >
+                  WhatsApp Chat Available
+                </a>
               </p>
-              <p className="text-xs mt-2 text-gray-500"></p>
+              <p className="text-xs mt-2 text-gray-500">
+                AI Assistant powered by OpenAI • Last updated:{" "}
+                {new Date().toLocaleDateString()}
+              </p>
             </div>
           </div>
         </footer>
