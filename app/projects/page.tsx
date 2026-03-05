@@ -24,6 +24,29 @@ import CaseStudyModal from "./components/CaseStudyModal";
 export default function ProjectsPage() {
   // All projects data with case study fields
   const projects = [
+   
+   {
+  id: 7,
+  title: "Tenda - Leadership Scorecard",
+  category: "Full Stack",
+  status: "In development",
+  description: "Accountability platform for Kenyan leaders. Track achievements, promises, failures, and vote on whether leaders deserve another term.",
+  image: "/images/tenda-preview.jpg",
+  techStack: ["Next.js", "TypeScript", "MongoDB", "Tailwind CSS", "NextAuth"],
+  features: [
+    "Leader profiles with promise tracking",
+    "Citizen voting system (Yes/No for another term)",
+    "County-wise performance data",
+    "Real-time rating aggregation",
+    "Achievements & failures timeline"
+  ],
+  duration: "4 weeks",
+  role: "Full Stack Developer",
+  liveUrl: "https://tenda.vercel.app",
+  githubUrl: "https://github.com/YOUR_USERNAME/tenda",
+  impact: "Helping Kenyans make informed voting decisions in 2027"
+},
+   
     {
       title: "Interactive Birthday Celebration",
       description:
@@ -615,6 +638,8 @@ export default function ProjectsPage() {
                           )}
                         </div>
                       </div>
+
+                      
 
                       {/* Quick Info */}
                       <div className="grid grid-cols-2 gap-3 mb-6">
