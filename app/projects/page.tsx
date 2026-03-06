@@ -24,29 +24,42 @@ import CaseStudyModal from "./components/CaseStudyModal";
 export default function ProjectsPage() {
   // All projects data with case study fields
   const projects = [
-   
-   {
-  id: 7,
-  title: "Tenda - Leadership Scorecard",
-  category: "Full Stack",
-  status: "In development",
-  description: "Accountability platform for Kenyan leaders. Track achievements, promises, failures, and vote on whether leaders deserve another term.",
-  image: "/images/tenda-preview.jpg",
-  techStack: ["Next.js", "TypeScript", "MongoDB", "Tailwind CSS", "NextAuth"],
-  features: [
-    "Leader profiles with promise tracking",
-    "Citizen voting system (Yes/No for another term)",
-    "County-wise performance data",
-    "Real-time rating aggregation",
-    "Achievements & failures timeline"
-  ],
-  duration: "4 weeks",
-  role: "Full Stack Developer",
-  liveUrl: "https://tenda.vercel.app",
-  githubUrl: "https://github.com/YOUR_USERNAME/tenda",
-  impact: "Helping Kenyans make informed voting decisions in 2027"
-},
-   
+    {
+      title: "Tenda - Leadership Scorecard",
+      description:
+        "Accountability platform for Kenyan leaders. Track achievements, promises, failures, and vote on whether leaders deserve another term.",
+      category: "Full Stack",
+      tech: ["Next.js 15", "TypeScript", "MongoDB", "Tailwind CSS", "NextAuth"],
+      status: "In Development",
+      link: "https://tenda.vercel.app",
+      emoji: "🗳️",
+      features: [
+        "Leader profiles with promise tracking",
+        "Citizen voting system (Yes/No for another term)",
+        "County-wise performance data",
+        "Real-time rating aggregation",
+        "Achievements & failures timeline",
+      ],
+      github: "https://github.com/mamoshi572/tenda",
+      problem:
+        "Kenyans lack a centralized platform to track leader performance and make informed voting decisions based on actual achievements rather than empty promises.",
+      solution:
+        "Built Tenda - a Swahili word meaning 'deeds' - creating a transparent scorecard where citizens can view promises made vs delivered, and vote on whether leaders deserve another term.",
+      results: [
+        "Live platform with 5 counties and 50+ leaders profiled",
+        "100+ citizen votes recorded",
+        "Featured on tech blogs for civic tech innovation",
+      ],
+      timeline: "4 weeks",
+      challenges: [
+        "Data verification and integrity",
+        "Preventing duplicate voting",
+        "Making complex political data easily digestible",
+      ],
+      role: "Full Stack Developer & Product Owner",
+      color: "from-indigo-500 to-orange-500",
+    },
+
     {
       title: "Interactive Birthday Celebration",
       description:
@@ -638,8 +651,6 @@ export default function ProjectsPage() {
                           )}
                         </div>
                       </div>
-
-                      
 
                       {/* Quick Info */}
                       <div className="grid grid-cols-2 gap-3 mb-6">
