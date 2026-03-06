@@ -22,6 +22,14 @@ import { useState, useEffect } from "react";
 import CaseStudyModal from "./components/CaseStudyModal";
 
 export default function ProjectsPage() {
+  // ✅ FIX 1: Add hydration state
+  const [isMounted, setIsMounted] = useState(false);
+
+  // ✅ FIX 2: Set mounted state after hydration
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   // All projects data with case study fields
   const projects = [
     {
@@ -349,6 +357,20 @@ export default function ProjectsPage() {
     document.addEventListener("keydown", handleEscape);
     return () => document.removeEventListener("keydown", handleEscape);
   }, [isModalOpen]);
+
+  // ✅ FIX 3: Don't render until after hydration is complete
+  if (!isMounted) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-blue-50/30 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900/10">
+        <div className="text-center">
+          <div className="text-6xl mb-4 animate-pulse">🗳️</div>
+          <div className="text-2xl font-bold gradient-text">
+            Loading Projects...
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/30 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900/10 py-12 md:py-20">
