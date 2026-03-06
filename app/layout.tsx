@@ -37,7 +37,7 @@ function LoadingSpinner() {
 
 // WhatsApp Button Component
 function WhatsAppButton() {
-  const phoneNumber = "254746562072"; // Your phone number from footer
+  const phoneNumber = "254746562072";
   const message =
     "Hi Benson, I saw your portfolio and would like to discuss a project.";
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
@@ -132,12 +132,12 @@ function ChatWindow() {
 
   return (
     <>
-      {/* Chat Toggle Button */}
+      {/* Chat Toggle Button - FIXED: Added title and better aria-label */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="fixed bottom-32 right-6 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-all z-40 flex items-center justify-center group"
-        aria-label="Open AI Chat Assistant"
-        title="Ask me about Benson's work"
+        aria-label={isOpen ? "Close AI chat assistant" : "Open AI chat assistant to ask about Benson's work"}
+        title={isOpen ? "Close chat" : "Ask about Benson's work"}
       >
         {isOpen ? (
           <XCircle
@@ -149,9 +149,14 @@ function ChatWindow() {
         )}
       </button>
 
-      {/* Chat Window */}
+      {/* Chat Window - FIXED: Added proper ARIA attributes */}
       {isOpen && (
-        <div className="fixed bottom-48 right-6 w-96 max-w-[calc(100vw-3rem)] h-[32rem] bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 flex flex-col z-40 overflow-hidden">
+        <div 
+          className="fixed bottom-48 right-6 w-96 max-w-[calc(100vw-3rem)] h-[32rem] bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 flex flex-col z-40 overflow-hidden"
+          role="dialog"
+          aria-label="AI chat assistant"
+          aria-modal="true"
+        >
           {/* Header */}
           <div className="p-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white">
             <div className="flex items-center gap-3">
@@ -159,8 +164,8 @@ function ChatWindow() {
                 <MessageSquare size={20} />
               </div>
               <div>
-                <h3 className="font-bold text-lg">Portfolio Assistant</h3>
-                <p className="text-sm opacity-90">
+                <h3 className="font-bold text-lg" id="chat-title">Portfolio Assistant</h3>
+                <p className="text-sm opacity-90" id="chat-description">
                   Ask me about Benson&apos;s work!
                 </p>
               </div>
@@ -168,7 +173,12 @@ function ChatWindow() {
           </div>
 
           {/* Messages Container */}
-          <div className="flex-1 overflow-y-auto p-4 bg-gray-50 dark:bg-gray-900">
+          <div 
+            className="flex-1 overflow-y-auto p-4 bg-gray-50 dark:bg-gray-900"
+            role="log"
+            aria-labelledby="chat-title"
+            aria-describedby="chat-description"
+          >
             {messages.length === 0 ? (
               <div className="text-center py-8 text-gray-500 dark:text-gray-400">
                 <div className="inline-block p-3 bg-blue-100 dark:bg-blue-900 rounded-full mb-3">
@@ -229,11 +239,14 @@ function ChatWindow() {
                 placeholder="Ask about projects, skills, or contact..."
                 className="flex-1 border border-gray-300 dark:border-gray-600 rounded-full px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
                 disabled={isLoading}
+                aria-label="Chat message input"
               />
               <button
                 type="submit"
                 disabled={!input.trim() || isLoading}
                 className="bg-blue-600 text-white p-3 rounded-full hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                aria-label="Send message"
+                title="Send message"
               >
                 <Send size={18} />
               </button>
@@ -255,7 +268,7 @@ function ChatWindow() {
   );
 }
 
-// Static metadata (for server component if you separate it)
+// Static metadata
 const METADATA = {
   title: "Benson Mwiti - Full Stack Engineer & UI/UX Designer",
   description:
@@ -276,7 +289,6 @@ export default function RootLayout({
   const [themeLoaded, setThemeLoaded] = useState(false);
 
   useEffect(() => {
-    // Check localStorage first, then system preference
     const savedTheme = localStorage.getItem("portfolio-theme");
 
     if (
@@ -293,7 +305,6 @@ export default function RootLayout({
     setThemeLoaded(true);
     setIsLoading(false);
 
-    // Add event listener for system theme changes
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     const handleChange = (e: MediaQueryListEvent) => {
       if (!localStorage.getItem("portfolio-theme")) {
@@ -323,7 +334,6 @@ export default function RootLayout({
     }
   };
 
-  // Close mobile menu when clicking outside (improved UX)
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (isMenuOpen && !(event.target as Element).closest("nav")) {
@@ -335,7 +345,6 @@ export default function RootLayout({
     return () => document.removeEventListener("click", handleClickOutside);
   }, [isMenuOpen]);
 
-  // Prevent body scroll when mobile menu is open
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = "hidden";
@@ -348,12 +357,10 @@ export default function RootLayout({
     };
   }, [isMenuOpen]);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setIsMenuOpen(false);
   }, []);
 
-  // Handle escape key to close mobile menu
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape" && isMenuOpen) {
@@ -407,9 +414,12 @@ export default function RootLayout({
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=5"
         />
-        <meta name="theme-color" content={isDark ? "#111827" : "#ffffff"} />
+        {/* FIXED: theme-color will be updated client-side */}
+        <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#111827" media="(prefers-color-scheme: dark)" />
         <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        {/* FIXED: Added apple-touch-icon correctly */}
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
 
         {/* Preconnect to important origins */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -522,7 +532,7 @@ export default function RootLayout({
                   Contact
                 </Link>
 
-                {/* Theme Toggle */}
+                {/* Theme Toggle - FIXED: Added title */}
                 <button
                   onClick={toggleTheme}
                   className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
@@ -570,6 +580,7 @@ export default function RootLayout({
                   onClick={() => setIsMenuOpen(!isMenuOpen)}
                   className="p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
                   aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+                  title={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
                   aria-expanded={isMenuOpen}
                   aria-controls="mobile-menu"
                 >
@@ -582,23 +593,21 @@ export default function RootLayout({
               </div>
             </div>
 
-            {/* Mobile Navigation */}
+            {/* Mobile Navigation - FIXED: Added proper ARIA menu roles */}
             {isMenuOpen && (
               <div
                 id="mobile-menu"
                 className="md:hidden mt-4 pb-4 border-t border-gray-200 dark:border-gray-800 pt-4 animate-in slide-in-from-top-5 duration-300"
+                role="menu"
+                aria-orientation="vertical"
+                aria-label="Mobile navigation menu"
               >
-                <div
-                  className="flex flex-col gap-1"
-                  role="menu"
-                  aria-orientation="vertical"
-                >
+                <div className="flex flex-col gap-1">
                   <Link
                     href="/"
                     className="py-3 px-4 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
                     onClick={() => setIsMenuOpen(false)}
                     role="menuitem"
-                    aria-current="page"
                   >
                     Home
                   </Link>
