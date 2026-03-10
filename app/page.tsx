@@ -12,11 +12,58 @@ import {
   Mail,
 } from "lucide-react";
 import Image from "next/image";
-
-// Add this at the top of your Home component (app/page.tsx)
 import Link from "next/link";
 
 export default function Home() {
+  // Expanded tech stack with more relevant skills
+  const techBadges = [
+    { 
+      tech: "React", 
+      color: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200",
+      rotationSpeed: 35, // Different speeds for variety
+      orbitRadius: 160,
+      delay: 0
+    },
+    { 
+      tech: "Next.js", 
+      color: "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200",
+      rotationSpeed: 28,
+      orbitRadius: 160,
+      delay: 0.5
+    },
+    { 
+      tech: "TypeScript", 
+      color: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200",
+      rotationSpeed: 42,
+      orbitRadius: 160,
+      delay: 1
+    },
+    { 
+      tech: "Node.js", 
+      color: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200",
+      rotationSpeed: 30,
+      orbitRadius: 160,
+      delay: 1.5
+    },
+    // Additional skills that could rotate in on hover or appear on larger screens
+    { 
+      tech: "Python", 
+      color: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200",
+      rotationSpeed: 38,
+      orbitRadius: 160,
+      delay: 2,
+      secondary: true // These could be conditionally shown
+    },
+    { 
+      tech: "PostgreSQL", 
+      color: "bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200",
+      rotationSpeed: 32,
+      orbitRadius: 160,
+      delay: 2.5,
+      secondary: true
+    },
+  ];
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -95,7 +142,7 @@ export default function Home() {
                     href="https://github.com/mamoshi572"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 bg-gray-100 dark:bg-gray-800 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                    className="p-2 bg-gray-100 dark:bg-gray-800 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors hover:scale-110 transform duration-200"
                   >
                     <Github className="w-5 h-5 text-gray-700 dark:text-gray-300" />
                   </a>
@@ -103,13 +150,13 @@ export default function Home() {
                     href="https://www.linkedin.com/in/benson-mwiti-87657031b"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 bg-gray-100 dark:bg-gray-800 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                    className="p-2 bg-gray-100 dark:bg-gray-800 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors hover:scale-110 transform duration-200"
                   >
                     <Linkedin className="w-5 h-5 text-gray-700 dark:text-gray-300" />
                   </a>
                   <a
                     href="mailto:benshomwiti@gmail.com"
-                    className="p-2 bg-gray-100 dark:bg-gray-800 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                    className="p-2 bg-gray-100 dark:bg-gray-800 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors hover:scale-110 transform duration-200"
                   >
                     <Mail className="w-5 h-5 text-gray-700 dark:text-gray-300" />
                   </a>
@@ -129,7 +176,7 @@ export default function Home() {
                   ].map((stat, index) => (
                     <div
                       key={index}
-                      className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-4 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700"
+                      className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-4 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow"
                     >
                       <div
                         className={`text-2xl font-bold text-${stat.color}-600 dark:text-${stat.color}-400 mb-1`}
@@ -186,64 +233,63 @@ export default function Home() {
                 <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96">
                   {/* Image Container with Gradient Border */}
                   <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 p-1 animate-gradient-xy">
-                    <div className="relative w-full h-full rounded-full overflow-hidden bg-white dark:bg-gray-900">
+                    <div className="relative w-full h-full rounded-full overflow-hidden bg-white dark:bg-gray-900 group">
                       <Image
                         src="/images/profile/profile-main.jpg"
-                        alt="Benson Mwiti - Full Stack Developer & UI/UX Designer"
+                        alt="Benson Mwiti - Full Stack Developer"
                         fill
                         sizes="(max-width: 768px) 256px, (max-width: 1024px) 320px, 384px"
-                        className="object-cover object-center"
+                        className="object-cover object-center transition-transform duration-500 group-hover:scale-110"
                         priority
                       />
+                      {/* Subtle overlay on hover */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     </div>
                   </div>
 
-                  {/* Floating Tech Badges */}
-                  <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{
-                      duration: 30,
-                      repeat: Infinity,
-                      ease: "linear",
-                    }}
-                    className="absolute -inset-8"
-                  >
-                    {[
-                      {
-                        tech: "React",
-                        color:
-                          "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200",
-                      },
-                      {
-                        tech: "Next.js",
-                        color:
-                          "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200",
-                      },
-                      {
-                        tech: "TypeScript",
-                        color:
-                          "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200",
-                      },
-                      {
-                        tech: "Node.js",
-                        color:
-                          "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200",
-                      },
-                    ].map((item, i) => (
-                      <div
+                  {/* Floating Tech Badges - Optimized with different speeds */}
+                  <div className="absolute -inset-8">
+                    {techBadges.map((item, i) => (
+                      <motion.div
                         key={item.tech}
                         className="absolute left-1/2 top-1/2"
                         style={{
-                          transform: `rotate(${i * 90}deg) translateX(160px) rotate(-${i * 90}deg)`,
+                          transform: `rotate(${i * 90}deg) translateX(${item.orbitRadius}px) rotate(-${i * 90}deg)`,
+                        }}
+                        animate={{ rotate: 360 }}
+                        transition={{
+                          duration: item.rotationSpeed,
+                          repeat: Infinity,
+                          ease: "linear",
+                          delay: item.delay,
                         }}
                       >
-                        <div
-                          className={`px-3 py-1 rounded-full shadow-lg text-sm font-medium ${item.color}`}
+                        <motion.div
+                          whileHover={{ 
+                            scale: 1.2,
+                            transition: { duration: 0.2 }
+                          }}
+                          className={`px-3 py-1.5 rounded-full shadow-lg text-sm font-medium ${item.color} cursor-default backdrop-blur-sm bg-opacity-90 hover:shadow-xl transition-shadow relative group`}
                         >
                           {item.tech}
-                        </div>
-                      </div>
+                          
+                          {/* Optional: Tooltip on hover for additional info */}
+                          <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                            {item.tech} Expert
+                          </span>
+                        </motion.div>
+                      </motion.div>
                     ))}
+                  </div>
+
+                  {/* Small indicator for more skills (optional) */}
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 2 }}
+                    className="absolute -top-2 -right-2 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-bold shadow-lg"
+                  >
+                    +6
                   </motion.div>
                 </div>
 
@@ -252,12 +298,17 @@ export default function Home() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.8 }}
-                  className="absolute -bottom-4 -right-4 bg-white dark:bg-gray-800 rounded-xl p-4 shadow-xl border border-gray-200 dark:border-gray-700"
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  className="absolute -bottom-4 -right-4 bg-white dark:bg-gray-800 rounded-xl p-4 shadow-xl border border-gray-200 dark:border-gray-700 hover:shadow-2xl transition-all cursor-default"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
+                    <motion.div 
+                      className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center"
+                      whileHover={{ rotate: 360 }}
+                      transition={{ duration: 0.5 }}
+                    >
                       <Code className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-                    </div>
+                    </motion.div>
                     <div>
                       <div className="text-2xl font-bold text-gray-900 dark:text-white">
                         5+
@@ -282,17 +333,27 @@ export default function Home() {
       {/* Add to your global CSS for animations */}
       <style jsx global>{`
         @keyframes gradient-xy {
-          0%,
-          100% {
-            background-position: 0% 50%;
-          }
-          50% {
-            background-position: 100% 50%;
-          }
+          0%, 100% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
         }
         .animate-gradient-xy {
           animation: gradient-xy 3s ease infinite;
           background-size: 200% 200%;
+        }
+        @keyframes blob {
+          0% { transform: translate(0px, 0px) scale(1); }
+          33% { transform: translate(30px, -50px) scale(1.1); }
+          66% { transform: translate(-20px, 20px) scale(0.9); }
+          100% { transform: translate(0px, 0px) scale(1); }
+        }
+        .animate-blob {
+          animation: blob 7s infinite;
+        }
+        .animation-delay-2000 {
+          animation-delay: 2s;
+        }
+        .animation-delay-4000 {
+          animation-delay: 4s;
         }
       `}</style>
     </div>
