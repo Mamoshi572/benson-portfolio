@@ -17,50 +17,53 @@ import Link from "next/link";
 export default function Home() {
   // Expanded tech stack with more relevant skills
   const techBadges = [
-    { 
-      tech: "React", 
+    {
+      tech: "React",
       color: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200",
       rotationSpeed: 35, // Different speeds for variety
       orbitRadius: 160,
-      delay: 0
+      delay: 0,
     },
-    { 
-      tech: "Next.js", 
+    {
+      tech: "Next.js",
       color: "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200",
       rotationSpeed: 28,
       orbitRadius: 160,
-      delay: 0.5
+      delay: 0.5,
     },
-    { 
-      tech: "TypeScript", 
+    {
+      tech: "TypeScript",
       color: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200",
       rotationSpeed: 42,
       orbitRadius: 160,
-      delay: 1
+      delay: 1,
     },
-    { 
-      tech: "Node.js", 
-      color: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200",
+    {
+      tech: "Node.js",
+      color:
+        "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200",
       rotationSpeed: 30,
       orbitRadius: 160,
-      delay: 1.5
+      delay: 1.5,
     },
     // Additional skills that could rotate in on hover or appear on larger screens
-    { 
-      tech: "Python", 
-      color: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200",
+    {
+      tech: "Python",
+      color:
+        "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200",
       rotationSpeed: 38,
       orbitRadius: 160,
       delay: 2,
-      secondary: true // These could be conditionally shown
+      secondary: true, // These could be conditionally shown
     },
-    { 
-      tech: "PostgreSQL", 
-      color: "bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200",
+    {
+      tech: "PostgreSQL",
+      color:
+        "bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200",
       rotationSpeed: 32,
       orbitRadius: 160,
       delay: 2.5,
-      secondary: true
+      secondary: true,
     },
   ];
 
@@ -112,7 +115,7 @@ export default function Home() {
                     size={28}
                   />
                   <h2 className="text-xl md:text-2xl lg:text-3xl text-gray-700 dark:text-gray-300">
-                    Full Stack Engineer & UI/UX Designer
+                    Full Stack Engineer
                   </h2>
                   <Palette
                     className="text-purple-500 dark:text-purple-400"
@@ -265,14 +268,14 @@ export default function Home() {
                         }}
                       >
                         <motion.div
-                          whileHover={{ 
+                          whileHover={{
                             scale: 1.2,
-                            transition: { duration: 0.2 }
+                            transition: { duration: 0.2 },
                           }}
                           className={`px-3 py-1.5 rounded-full shadow-lg text-sm font-medium ${item.color} cursor-default backdrop-blur-sm bg-opacity-90 hover:shadow-xl transition-shadow relative group`}
                         >
                           {item.tech}
-                          
+
                           {/* Optional: Tooltip on hover for additional info */}
                           <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
                             {item.tech} Expert
@@ -302,7 +305,7 @@ export default function Home() {
                   className="absolute -bottom-4 -right-4 bg-white dark:bg-gray-800 rounded-xl p-4 shadow-xl border border-gray-200 dark:border-gray-700 hover:shadow-2xl transition-all cursor-default"
                 >
                   <div className="flex items-center gap-3">
-                    <motion.div 
+                    <motion.div
                       className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center"
                       whileHover={{ rotate: 360 }}
                       transition={{ duration: 0.5 }}
@@ -333,18 +336,31 @@ export default function Home() {
       {/* Add to your global CSS for animations */}
       <style jsx global>{`
         @keyframes gradient-xy {
-          0%, 100% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
+          0%,
+          100% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
         }
         .animate-gradient-xy {
           animation: gradient-xy 3s ease infinite;
           background-size: 200% 200%;
         }
         @keyframes blob {
-          0% { transform: translate(0px, 0px) scale(1); }
-          33% { transform: translate(30px, -50px) scale(1.1); }
-          66% { transform: translate(-20px, 20px) scale(0.9); }
-          100% { transform: translate(0px, 0px) scale(1); }
+          0% {
+            transform: translate(0px, 0px) scale(1);
+          }
+          33% {
+            transform: translate(30px, -50px) scale(1.1);
+          }
+          66% {
+            transform: translate(-20px, 20px) scale(0.9);
+          }
+          100% {
+            transform: translate(0px, 0px) scale(1);
+          }
         }
         .animate-blob {
           animation: blob 7s infinite;

@@ -103,7 +103,7 @@ export default function ProjectsPage() {
         "Lucide React",
       ],
       status: "Live",
-      link: "https://soma-analytics.vercel.app",
+      link: "https://https://soma-analytics-dashboard.vercel.app",
       emoji: "📊",
       features: [
         "Real-time Nairobi time updates",
@@ -144,7 +144,7 @@ export default function ProjectsPage() {
       category: "Full Stack",
       tech: ["Next.js", "JavaScript", "HTML5", "CSS3"],
       status: "Live",
-      link: "#",
+      link: "https://cool-pony-d2b3a5.netlify.app",
       emoji: "🍟",
       features: [
         "Online Ordering",
@@ -152,6 +152,8 @@ export default function ProjectsPage() {
         "Responsive Design",
         "Payment Integration",
       ],
+
+         github: "https://github.com/mamoshi572/mamoshi-kitchen",
       timeline: "2 weeks",
       role: "Full Stack Developer",
       color: "from-orange-500 to-red-500",
