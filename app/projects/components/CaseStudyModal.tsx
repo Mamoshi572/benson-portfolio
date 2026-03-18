@@ -3,15 +3,14 @@
 import { motion, AnimatePresence } from "framer-motion";
 import {
   X,
-  ExternalLink,
   Github,
-  Clock,
+  ExternalLink,
+  Calendar,
   Users,
-  Target,
-  CheckCircle,
   Award,
-  AlertCircle,
+  Zap,
 } from "lucide-react";
+import { useEffect } from "react";
 
 interface CaseStudyModalProps {
   isOpen: boolean;
@@ -25,13 +24,14 @@ interface CaseStudyModalProps {
     link: string;
     emoji: string;
     features: string[];
-    github: string;
-    problem: string;
-    solution: string;
-    results: string[];
+    github?: string;
+    problem?: string;
+    solution?: string;
+    results?: string[];
     timeline: string;
-    challenges: string[];
+    challenges?: string[];
     role: string;
+    color: string;
   };
 }
 
@@ -40,7 +40,15 @@ export default function CaseStudyModal({
   onClose,
   project,
 }: CaseStudyModalProps) {
-  if (!project) return null;
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [onClose]);
+
+  if (!isOpen) return null;
 
   return (
     <AnimatePresence>
@@ -52,94 +60,191 @@ export default function CaseStudyModal({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50"
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
           />
 
           {/* Modal */}
-          <div className="fixed inset-0 z-50 overflow-y-auto">
-            <div className="min-h-full flex items-center justify-center p-4">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                transition={{ type: "spring", damping: 25 }}
-                className="relative bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden"
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            className="fixed inset-4 md:inset-10 z-50 overflow-hidden rounded-2xl bg-white dark:bg-gray-900 shadow-2xl"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-title"
+          >
+            {/* Close button */}
+            <button
+              onClick={onClose}
+              className="absolute top-4 right-4 z-10 p-2 bg-gray-100 dark:bg-gray-800 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+              aria-label="Close modal"
+              title="Close modal"
+            >
+              <X size={20} />
+            </button>
+
+            <div className="h-full overflow-y-auto">
+              {/* Header with gradient */}
+              <div
+                className={`p-8 bg-gradient-to-br ${project.color} relative`}
               >
-                {/* Close button */}
-               <button
-  onClick={onClose}
-  className="absolute top-4 right-4 p-2 bg-gray-100 dark:bg-gray-800 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-  aria-label="Close modal"
-  title="Close modal"
->
-  <X size={20} />
-</button>
-                
-                {/* Modal content */}
-                <div className="overflow-y-auto max-h-[90vh]">
-                  {/* Header with gradient */}
-                  <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-8 text-white">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center gap-3">
-                        <div className="text-4xl">{project.emoji}</div>
-                        <div>
-                          <span className="px-3 py-1 bg-white/20 text-white text-sm font-medium rounded-full">
-                            {project.category}
-                          </span>
-                        </div>
-                      </div>
-                      <span
-                        className={`px-3 py-1 text-sm font-medium rounded-full ${
-                          project.status === "Live"
-                            ? "bg-green-500/20 text-green-100"
-                            : "bg-yellow-500/20 text-yellow-100"
-                        }`}
+                <div className="absolute inset-0 bg-black/10" />
+                <div className="relative z-10">
+                  <div className="flex items-center gap-4 mb-4">
+                    <span className="text-6xl">{project.emoji}</span>
+                    <div>
+                      <h2
+                        id="modal-title"
+                        className="text-3xl md:text-4xl font-bold text-white mb-2"
                       >
-                        {project.status}
-                      </span>
-                    </div>
-
-                    <h2 className="text-3xl font-bold mb-4">{project.title}</h2>
-                    <p className="text-blue-100">{project.description}</p>
-
-                    <div className="flex flex-wrap gap-3 mt-6">
-                      {project.link !== "#" && (
-                        <a
-                          href={project.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="px-4 py-2 bg-white text-blue-600 font-medium rounded-lg hover:bg-gray-100 transition flex items-center gap-2"
-                        >
-                          <ExternalLink size={16} />
-                          Live Demo
-                        </a>
-                      )}
-                      {project.github !== "#" && (
-                        <a
-                          href={project.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="px-4 py-2 bg-white/20 hover:bg-white/30 text-white font-medium rounded-lg transition flex items-center gap-2"
-                        >
-                          <Github size={16} />
-                          View Code
-                        </a>
-                      )}
+                        {project.title}
+                      </h2>
+                      <p className="text-white/80 text-lg">
+                        {project.category}
+                      </p>
                     </div>
                   </div>
+                  <p className="text-white/90 text-xl max-w-3xl">
+                    {project.description}
+                  </p>
+                </div>
+              </div>
 
-                  {/* Content */}
-                  <div className="p-8">
-                    {/* Tech Stack */}
-                    <div className="mb-8">
-                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                        Technology Stack
+              {/* Content */}
+              <div className="p-8">
+                <div className="grid md:grid-cols-3 gap-8">
+                  {/* Main content - 2 columns */}
+                  <div className="md:col-span-2 space-y-8">
+                    {/* Problem & Solution */}
+                    {project.problem && (
+                      <section>
+                        <h3 className="text-xl font-bold mb-3 flex items-center gap-2">
+                          <span className="w-1 h-6 bg-red-500 rounded-full" />
+                          The Problem
+                        </h3>
+                        <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                          {project.problem}
+                        </p>
+                      </section>
+                    )}
+
+                    {project.solution && (
+                      <section>
+                        <h3 className="text-xl font-bold mb-3 flex items-center gap-2">
+                          <span className="w-1 h-6 bg-green-500 rounded-full" />
+                          The Solution
+                        </h3>
+                        <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                          {project.solution}
+                        </p>
+                      </section>
+                    )}
+
+                    {/* Features */}
+                    <section>
+                      <h3 className="text-xl font-bold mb-3 flex items-center gap-2">
+                        <Zap className="text-yellow-500" size={20} />
+                        Key Features
                       </h3>
+                      <ul className="grid grid-cols-2 gap-3">
+                        {project.features.map((feature, idx) => (
+                          <li key={idx} className="flex items-start gap-2">
+                            <span className="text-green-500 mt-1">✓</span>
+                            <span className="text-gray-700 dark:text-gray-300">
+                              {feature}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </section>
+
+                    {/* Results */}
+                    {project.results && project.results.length > 0 && (
+                      <section>
+                        <h3 className="text-xl font-bold mb-3 flex items-center gap-2">
+                          <Award className="text-yellow-500" size={20} />
+                          Results & Impact
+                        </h3>
+                        <ul className="space-y-2">
+                          {project.results.map((result, idx) => (
+                            <li key={idx} className="flex items-start gap-2">
+                              <span className="text-blue-500 mt-1">•</span>
+                              <span className="text-gray-700 dark:text-gray-300">
+                                {result}
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
+                      </section>
+                    )}
+
+                    {/* Challenges */}
+                    {project.challenges && project.challenges.length > 0 && (
+                      <section>
+                        <h3 className="text-xl font-bold mb-3">
+                          Challenges Overcome
+                        </h3>
+                        <ul className="space-y-2">
+                          {project.challenges.map((challenge, idx) => (
+                            <li key={idx} className="flex items-start gap-2">
+                              <span className="text-orange-500 mt-1">⚠️</span>
+                              <span className="text-gray-700 dark:text-gray-300">
+                                {challenge}
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
+                      </section>
+                    )}
+                  </div>
+
+                  {/* Sidebar - 1 column */}
+                  <div className="space-y-6">
+                    {/* Quick Info */}
+                    <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6">
+                      <h3 className="font-bold mb-4">Project Details</h3>
+                      <div className="space-y-4">
+                        <div className="flex items-center gap-3">
+                          <Calendar size={18} className="text-gray-500" />
+                          <div>
+                            <p className="text-sm text-gray-500">Timeline</p>
+                            <p className="font-medium">{project.timeline}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <Users size={18} className="text-gray-500" />
+                          <div>
+                            <p className="text-sm text-gray-500">Role</p>
+                            <p className="font-medium">{project.role}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <span className="text-lg">{project.emoji}</span>
+                          <div>
+                            <p className="text-sm text-gray-500">Status</p>
+                            <p
+                              className={`font-medium ${
+                                project.status === "Live"
+                                  ? "text-green-600"
+                                  : "text-yellow-600"
+                              }`}
+                            >
+                              {project.status}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Tech Stack */}
+                    <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6">
+                      <h3 className="font-bold mb-4">Tech Stack</h3>
                       <div className="flex flex-wrap gap-2">
                         {project.tech.map((tech) => (
                           <span
                             key={tech}
-                            className="px-3 py-1.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm rounded-lg"
+                            className="px-3 py-1.5 bg-white dark:bg-gray-700 rounded-full text-sm shadow-sm"
                           >
                             {tech}
                           </span>
@@ -147,131 +252,40 @@ export default function CaseStudyModal({
                       </div>
                     </div>
 
-                    {/* Quick Stats */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                      <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Clock
-                            className="text-blue-600 dark:text-blue-400"
-                            size={18}
-                          />
-                          <span className="font-semibold text-blue-700 dark:text-blue-300">
-                            Timeline
-                          </span>
-                        </div>
-                        <p className="text-gray-700 dark:text-gray-300">
-                          {project.timeline}
-                        </p>
-                      </div>
-
-                      <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Users
-                            className="text-purple-600 dark:text-purple-400"
-                            size={18}
-                          />
-                          <span className="font-semibold text-purple-700 dark:text-purple-300">
-                            Role
-                          </span>
-                        </div>
-                        <p className="text-gray-700 dark:text-gray-300">
-                          {project.role}
-                        </p>
-                      </div>
-
-                      <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Target
-                            className="text-green-600 dark:text-green-400"
-                            size={18}
-                          />
-                          <span className="font-semibold text-green-700 dark:text-green-300">
-                            Features
-                          </span>
-                        </div>
-                        <p className="text-gray-700 dark:text-gray-300">
-                          {project.features.length} implemented
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Case Study Sections */}
-                    <div className="grid md:grid-cols-2 gap-8">
-                      <div>
-                        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                          <AlertCircle className="text-red-500" size={22} />
-                          The Challenge
-                        </h3>
-                        <p className="text-gray-600 dark:text-gray-300 bg-red-50 dark:bg-red-900/10 p-4 rounded-lg mb-6">
-                          {project.problem}
-                        </p>
-
-                        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                          <Target className="text-green-500" size={22} />
-                          The Solution
-                        </h3>
-                        <p className="text-gray-600 dark:text-gray-300 bg-green-50 dark:bg-green-900/10 p-4 rounded-lg">
-                          {project.solution}
-                        </p>
-                      </div>
-
-                      <div>
-                        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                          <CheckCircle className="text-blue-500" size={22} />
-                          Key Results
-                        </h3>
-                        <ul className="space-y-3 mb-6">
-                          {project.results.map((result, idx) => (
-                            <li key={idx} className="flex items-start gap-3">
-                              <div className="w-2 h-2 rounded-full bg-blue-500 mt-2 flex-shrink-0" />
-                              <span className="text-gray-600 dark:text-gray-300">
-                                {result}
-                              </span>
-                            </li>
-                          ))}
-                        </ul>
-
-                        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                          <Award className="text-yellow-500" size={22} />
-                          Challenges Overcome
-                        </h3>
-                        <ul className="space-y-3">
-                          {project.challenges.map((challenge, idx) => (
-                            <li key={idx} className="flex items-start gap-3">
-                              <div className="w-2 h-2 rounded-full bg-yellow-500 mt-2 flex-shrink-0" />
-                              <span className="text-gray-600 dark:text-gray-300">
-                                {challenge}
-                              </span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-
-                    {/* Features */}
-                    <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
-                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
-                        Key Features
-                      </h3>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        {project.features.map((feature, idx) => (
-                          <div
-                            key={idx}
-                            className="flex items-center gap-2 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg"
-                          >
-                            <div className="w-2 h-2 rounded-full bg-blue-500" />
-                            <span className="text-gray-700 dark:text-gray-300">
-                              {feature}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
+                    {/* Links */}
+                    <div className="flex gap-3">
+                      {project.link && project.link !== "#" && (
+                        <a
+                          href={project.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl transition flex items-center justify-center gap-2"
+                          aria-label={`View live demo of ${project.title} (opens in new tab)`}
+                          title="Live Demo"
+                        >
+                          <ExternalLink size={18} />
+                          Live Demo
+                        </a>
+                      )}
+                      {project.github && project.github !== "#" && (
+                        <a
+                          href={project.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1 py-3 bg-gray-800 hover:bg-gray-900 text-white font-medium rounded-xl transition flex items-center justify-center gap-2"
+                          aria-label={`View source code for ${project.title} (opens in new tab)`}
+                          title="Source Code"
+                        >
+                          <Github size={18} />
+                          Code
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             </div>
-          </div>
+          </motion.div>
         </>
       )}
     </AnimatePresence>
