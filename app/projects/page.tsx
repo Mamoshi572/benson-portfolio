@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { useState, useEffect, useCallback, useMemo } from "react";
 import CaseStudyModal from "./components/CaseStudyModal";
+import Image from "next/image";
 
 // Define TypeScript interfaces
 interface Project {
@@ -38,6 +39,7 @@ interface Project {
   challenges?: string[];
   role: string;
   color: string;
+  bgImage?: string;
 }
 
 export default function ProjectsPage() {
@@ -85,8 +87,8 @@ export default function ProjectsPage() {
       ],
       role: "Full Stack Developer & Product Owner",
       color: "from-indigo-500 to-orange-500",
+      bgImage: "/images/projects/tenda-bg.jpg",
     },
-
     {
       title: "Soma Analytics Dashboard",
       description:
@@ -133,6 +135,7 @@ export default function ProjectsPage() {
       ],
       role: "Full Stack Developer & UI Designer",
       color: "from-green-500 via-black to-red-500",
+      bgImage: "/images/projects/soma-bg.jpg",
     },
     {
       title: "Ashen Bites Website",
@@ -152,6 +155,7 @@ export default function ProjectsPage() {
       timeline: "2 weeks",
       role: "Full Stack Developer",
       color: "from-orange-500 to-red-500",
+      bgImage: "/images/projects/ashen-bites-bg.jpg",
     },
     {
       title: "Styles N Tunes",
@@ -171,6 +175,7 @@ export default function ProjectsPage() {
       timeline: "3 weeks",
       role: "Frontend Developer",
       color: "from-purple-500 to-pink-500",
+      bgImage: "/images/projects/styles-tunes-bg.jpg",
     },
     {
       title: "GreenLeaf Dispensary",
@@ -190,6 +195,7 @@ export default function ProjectsPage() {
       timeline: "4 weeks",
       role: "Full Stack Developer",
       color: "from-green-500 to-emerald-500",
+      bgImage: "/images/projects/greenleaf-bg.jpg",
     },
     {
       title: "AgriInfo Offline App",
@@ -209,6 +215,7 @@ export default function ProjectsPage() {
       timeline: "5 weeks",
       role: "Full Stack Developer",
       color: "from-green-600 to-teal-500",
+      bgImage: "/images/projects/agriinfo-bg.jpg",
     },
     {
       title: "Modeling & Services Portfolio",
@@ -228,6 +235,7 @@ export default function ProjectsPage() {
       timeline: "2 weeks",
       role: "Full Stack Developer",
       color: "from-blue-500 to-cyan-500",
+      bgImage: "/images/projects/modeling-bg.jpg",
     },
     {
       title: "FinTech Mobile Application",
@@ -246,6 +254,7 @@ export default function ProjectsPage() {
       timeline: "6+ weeks",
       role: "Mobile Developer",
       color: "from-indigo-500 to-blue-500",
+      bgImage: "/images/projects/fintech-bg.jpg",
     },
     {
       title: "EcoTrack Sustainability App",
@@ -265,6 +274,7 @@ export default function ProjectsPage() {
       timeline: "5 weeks",
       role: "Mobile Developer",
       color: "from-emerald-500 to-green-500",
+      bgImage: "/images/projects/ecotrack-bg.jpg",
     },
     {
       title: "Portfolio 2024",
@@ -284,6 +294,7 @@ export default function ProjectsPage() {
       timeline: "3 weeks",
       role: "Designer & Developer",
       color: "from-primary-500 to-secondary-500",
+      bgImage: "/images/projects/portfolio-bg.jpg",
     },
   ];
 
@@ -361,7 +372,7 @@ export default function ProjectsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/30 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900/10 py-12 md:py-20">
-      {/* Animated Background Elements - FIXED: Removed inline styles */}
+      {/* Animated Background Elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-primary-500/10 rounded-full blur-3xl animate-float" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary-500/10 rounded-full blur-3xl animate-float animation-delay-2000" />
@@ -577,23 +588,45 @@ export default function ProjectsPage() {
                   <div className="absolute inset-0 bg-gradient-to-br from-primary-500/20 via-transparent to-secondary-500/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                   <div className="relative backdrop-blur-md bg-white/30 dark:bg-gray-800/30 rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300 h-full border border-white/20 dark:border-gray-700/20">
-                    {/* Project Header */}
-                    <div
-                      className={`p-8 bg-gradient-to-br ${project.color} relative overflow-hidden`}
-                    >
-                      <div className="absolute inset-0 bg-black/10" />
-                      <div className="relative z-10">
-                        <div className="flex justify-between items-start mb-6">
-                          <div className="text-5xl">{project.emoji}</div>
+                    {/* Project Header with Background Image */}
+                    <div className="relative h-64 overflow-hidden">
+                      {/* Background Image */}
+                      {project.bgImage ? (
+                        <>
+                          <Image
+                            src={project.bgImage}
+                            alt=""
+                            fill
+                            className="object-cover transition-transform duration-500 group-hover:scale-110"
+                            priority={index < 3}
+                          />
+                          {/* Gradient Overlay */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/30" />
+                        </>
+                      ) : (
+                        /* Fallback gradient if no background image */
+                        <div
+                          className={`absolute inset-0 bg-gradient-to-br ${project.color}`}
+                        >
+                          <div className="absolute inset-0 bg-black/20" />
+                        </div>
+                      )}
+
+                      {/* Content */}
+                      <div className="absolute inset-0 p-6 flex flex-col justify-end">
+                        <div className="flex justify-between items-start mb-3">
+                          <div className="text-4xl bg-white/20 backdrop-blur-sm p-2 rounded-xl">
+                            {project.emoji}
+                          </div>
                           <div className="flex flex-col items-end gap-2">
-                            <span className="px-3 py-1 bg-white/20 backdrop-blur-sm text-white text-sm font-medium rounded-full">
+                            <span className="px-2 py-1 bg-white/20 backdrop-blur-sm text-white text-xs font-medium rounded-full">
                               {project.category}
                             </span>
                             <span
-                              className={`px-3 py-1 text-sm font-medium rounded-full ${
+                              className={`px-2 py-1 text-xs font-medium rounded-full backdrop-blur-sm ${
                                 project.status === "Live"
-                                  ? "bg-green-500/20 text-green-100"
-                                  : "bg-yellow-500/20 text-yellow-100"
+                                  ? "bg-green-500/40 text-white"
+                                  : "bg-yellow-500/40 text-white"
                               }`}
                             >
                               {project.status}
@@ -601,11 +634,11 @@ export default function ProjectsPage() {
                           </div>
                         </div>
 
-                        <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-white/90 transition">
+                        <h3 className="text-xl font-bold text-white mb-2 line-clamp-2 drop-shadow-lg">
                           {project.title}
                         </h3>
 
-                        <p className="text-white/80 mb-6 line-clamp-2">
+                        <p className="text-sm text-white/90 line-clamp-2 drop-shadow-md">
                           {project.description}
                         </p>
                       </div>
