@@ -86,6 +86,54 @@ export default function ProjectsPage() {
       role: "Full Stack Developer & Product Owner",
       color: "from-indigo-500 to-orange-500",
     },
+
+    {
+      title: "Soma Analytics Dashboard",
+      description:
+        "Real-time Kenyan Business Intelligence Dashboard with interactive metrics, revenue tracking, and transaction monitoring. Features Nairobi time updates, dark mode, and comprehensive data visualization.",
+      category: "Full Stack",
+      tech: [
+        "Next.js 15",
+        "TypeScript",
+        "Tailwind CSS",
+        "Recharts",
+        "Framer Motion",
+        "Lucide React",
+      ],
+      status: "Live",
+      link: "https://soma-analytics.vercel.app",
+      emoji: "📊",
+      features: [
+        "Real-time Nairobi time updates",
+        "Interactive metric cards with sparklines",
+        "Revenue charts with target comparisons",
+        "Transaction table with search & filters",
+        "Dark/light mode toggle",
+        "Auto-refresh functionality",
+        "Export options (CSV, PDF, Excel)",
+        "Kenyan flag themed design",
+      ],
+      github: "https://github.com/mamoshi572/soma-analytics",
+      problem:
+        "Kenyan businesses lack intuitive, real-time dashboards to monitor key performance metrics with local context (KES currency, Nairobi time, M-Pesa transactions).",
+      solution:
+        "Built a comprehensive analytics dashboard with Kenyan-centric features including Shilling formatting, Nairobi timezone, and M-Pesa transaction examples. Designed with Kenyan flag colors (green, black, red) and local business context.",
+      results: [
+        "Live dashboard with 8+ interactive metrics",
+        "Real-time data visualization with 8-month revenue tracking",
+        "Transaction monitoring with 8 sample Kenyan customers",
+        "Fully responsive design working on all devices",
+      ],
+      timeline: "2 weeks",
+      challenges: [
+        "Implementing real-time clock with Nairobi timezone",
+        "Creating responsive charts that work on mobile",
+        "Designing a cohesive theme with Kenyan flag colors",
+        "TypeScript type safety with Recharts library",
+      ],
+      role: "Full Stack Developer & UI Designer",
+      color: "from-green-500 via-black to-red-500",
+    },
     {
       title: "Ashen Bites Website",
       description:
