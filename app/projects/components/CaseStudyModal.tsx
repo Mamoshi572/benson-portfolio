@@ -66,13 +66,15 @@ export default function CaseStudyModal({
                 className="relative bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden"
               >
                 {/* Close button */}
-                <button
-                  onClick={onClose}
-                  className="absolute top-4 right-4 z-10 p-2 bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white rounded-full transition"
-                >
-                  <X size={24} />
-                </button>
-
+               <button
+  onClick={onClose}
+  className="absolute top-4 right-4 p-2 bg-gray-100 dark:bg-gray-800 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+  aria-label="Close modal"
+  title="Close modal"
+>
+  <X size={20} />
+</button>
+                
                 {/* Modal content */}
                 <div className="overflow-y-auto max-h-[90vh]">
                   {/* Header with gradient */}

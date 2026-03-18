@@ -2,7 +2,6 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  ExternalLink,
   Github,
   Eye,
   Filter,
@@ -18,17 +17,40 @@ import {
   Code,
   Palette,
 } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import CaseStudyModal from "./components/CaseStudyModal";
+
+// Define TypeScript interfaces
+interface Project {
+  title: string;
+  description: string;
+  category: string;
+  tech: string[];
+  status: string;
+  link: string;
+  emoji: string;
+  features: string[];
+  github?: string;
+  problem?: string;
+  solution?: string;
+  results?: string[];
+  timeline: string;
+  challenges?: string[];
+  role: string;
+  color: string;
+}
 
 export default function ProjectsPage() {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
+    return () => {
+      document.body.style.overflow = "unset";
+    };
   }, []);
 
-  const projects = [
+  const projects: Project[] = [
     {
       title: "Tenda - Leadership Scorecard",
       description:
@@ -64,50 +86,207 @@ export default function ProjectsPage() {
       role: "Full Stack Developer & Product Owner",
       color: "from-indigo-500 to-orange-500",
     },
-    // ... rest of your projects remain the same
+    {
+      title: "Ashen Bites Website",
+      description:
+        "Authentic Kenyan Street Food platform with modern e-commerce functionality.",
+      category: "Full Stack",
+      tech: ["Next.js", "JavaScript", "HTML5", "CSS3"],
+      status: "Live",
+      link: "#",
+      emoji: "🍟",
+      features: [
+        "Online Ordering",
+        "Menu Management",
+        "Responsive Design",
+        "Payment Integration",
+      ],
+      timeline: "2 weeks",
+      role: "Full Stack Developer",
+      color: "from-orange-500 to-red-500",
+    },
+    {
+      title: "Styles N Tunes",
+      description:
+        "Platform showcasing intersection of urban streetwear and music culture.",
+      category: "Frontend",
+      tech: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
+      status: "Live",
+      link: "#",
+      emoji: "👕",
+      features: [
+        "Product Showcase",
+        "Music Integration",
+        "E-commerce",
+        "Artist Collaborations",
+      ],
+      timeline: "3 weeks",
+      role: "Frontend Developer",
+      color: "from-purple-500 to-pink-500",
+    },
+    {
+      title: "GreenLeaf Dispensary",
+      description:
+        "Premium cannabis e-commerce platform with inventory management.",
+      category: "Full Stack",
+      tech: ["Next.js", "TypeScript", "Node.js", "PostgreSQL", "Stripe"],
+      status: "Live",
+      link: "#",
+      emoji: "🌿",
+      features: [
+        "E-commerce",
+        "User Authentication",
+        "Payment Gateway",
+        "Inventory Management",
+      ],
+      timeline: "4 weeks",
+      role: "Full Stack Developer",
+      color: "from-green-500 to-emerald-500",
+    },
+    {
+      title: "AgriInfo Offline App",
+      description:
+        "Offline-first agricultural information platform for farmers.",
+      category: "Data Visualization",
+      tech: ["React", "D3.js", "Python", "IndexedDB", "Flask"],
+      status: "Live",
+      link: "#",
+      emoji: "🌾",
+      features: [
+        "Offline First",
+        "Data Visualization",
+        "Real-time Updates",
+        "Weather Integration",
+      ],
+      timeline: "5 weeks",
+      role: "Full Stack Developer",
+      color: "from-green-600 to-teal-500",
+    },
+    {
+      title: "Modeling & Services Portfolio",
+      description:
+        "Dynamic portfolio for dual-skill professional in fashion and services.",
+      category: "Full Stack",
+      tech: ["Next.js", "JavaScript", "HTML5", "CSS3", "Framer Motion"],
+      status: "Live",
+      link: "#",
+      emoji: "💼",
+      features: [
+        "Portfolio Showcase",
+        "Service Catalog",
+        "Responsive Design",
+        "Booking System",
+      ],
+      timeline: "2 weeks",
+      role: "Full Stack Developer",
+      color: "from-blue-500 to-cyan-500",
+    },
+    {
+      title: "FinTech Mobile Application",
+      description: "Cross-platform mobile app for financial management.",
+      category: "Mobile Development",
+      tech: ["React Native", "TypeScript", "Firebase", "Redux"],
+      status: "In Development",
+      link: "#",
+      emoji: "📱",
+      features: [
+        "Biometric Auth",
+        "Real-time Data",
+        "Cross Platform",
+        "Budget Tracking",
+      ],
+      timeline: "6+ weeks",
+      role: "Mobile Developer",
+      color: "from-indigo-500 to-blue-500",
+    },
+    {
+      title: "EcoTrack Sustainability App",
+      description:
+        "Mobile application helping users track and reduce their carbon footprint.",
+      category: "Mobile Development",
+      tech: ["React Native", "TypeScript", "Firebase", "D3.js"],
+      status: "Live",
+      link: "#",
+      emoji: "🌱",
+      features: [
+        "Carbon Footprint Calculator",
+        "Personalized Tips",
+        "Progress Tracking",
+        "Social Sharing",
+      ],
+      timeline: "5 weeks",
+      role: "Mobile Developer",
+      color: "from-emerald-500 to-green-500",
+    },
+    {
+      title: "Portfolio 2024",
+      description:
+        "Personal portfolio website showcasing projects and skills with modern design.",
+      category: "Frontend",
+      tech: ["Next.js", "TypeScript", "Framer Motion", "Tailwind CSS"],
+      status: "Live",
+      link: "https://benson-portfolio-mu.vercel.app",
+      emoji: "🚀",
+      features: [
+        "Project Showcase",
+        "Case Studies",
+        "Interactive UI",
+        "Dark Mode",
+      ],
+      timeline: "3 weeks",
+      role: "Designer & Developer",
+      color: "from-primary-500 to-secondary-500",
+    },
   ];
 
-  const allCategories = ["All", ...new Set(projects.map((p) => p.category))];
+  // Memoized categories and counts
+  const { allCategories, categoryCounts } = useMemo(() => {
+    const cats = ["All", ...new Set(projects.map((p) => p.category))];
+    const counts: Record<string, number> = {
+      All: projects.length,
+    };
+    projects.forEach((p) => {
+      counts[p.category] = (counts[p.category] || 0) + 1;
+    });
+    return { allCategories: cats, categoryCounts: counts };
+  }, [projects]);
+
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
-  const [showFilters, setShowFilters] = useState(false);
-  const [selectedProject, setSelectedProject] = useState<any>(null);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const filteredProjects = projects.filter((project) => {
-    const matchesCategory =
-      selectedCategory === "All" || project.category === selectedCategory;
-    const matchesSearch =
-      project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      project.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      project.tech.some((tech) =>
-        tech.toLowerCase().includes(searchQuery.toLowerCase()),
-      );
-    return matchesCategory && matchesSearch;
-  });
+  // Memoized filtered projects
+  const filteredProjects = useMemo(() => {
+    return projects.filter((project) => {
+      const matchesCategory =
+        selectedCategory === "All" || project.category === selectedCategory;
+      const matchesSearch =
+        project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        project.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        project.tech.some((tech) =>
+          tech.toLowerCase().includes(searchQuery.toLowerCase()),
+        );
+      return matchesCategory && matchesSearch;
+    });
+  }, [projects, selectedCategory, searchQuery]);
 
-  const categoryCounts: Record<string, number> = {};
-  allCategories.forEach((category) => {
-    if (category === "All") {
-      categoryCounts[category] = projects.length;
-    } else {
-      categoryCounts[category] = projects.filter(
-        (p) => p.category === category,
-      ).length;
-    }
-  });
-
-  const openCaseStudy = (project: any) => {
+  const openCaseStudy = useCallback((project: Project) => {
     setSelectedProject(project);
     setIsModalOpen(true);
     document.body.style.overflow = "hidden";
-  };
+  }, []);
 
-  const closeCaseStudy = () => {
+  const closeCaseStudy = useCallback(() => {
     setIsModalOpen(false);
     document.body.style.overflow = "unset";
     setTimeout(() => setSelectedProject(null), 300);
-  };
+  }, []);
+
+  const clearFilters = useCallback(() => {
+    setSelectedCategory("All");
+    setSearchQuery("");
+  }, []);
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -117,14 +296,14 @@ export default function ProjectsPage() {
     };
     document.addEventListener("keydown", handleEscape);
     return () => document.removeEventListener("keydown", handleEscape);
-  }, [isModalOpen]);
+  }, [isModalOpen, closeCaseStudy]);
 
   if (!isMounted) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-blue-50/30 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900/10">
         <div className="text-center">
-          <div className="text-6xl mb-4 animate-pulse">🗳️</div>
-          <div className="text-2xl font-bold gradient-text">
+          <div className="text-6xl mb-4 animate-pulse">🚀</div>
+          <div className="text-2xl font-bold bg-gradient-to-r from-primary-500 to-secondary-500 bg-clip-text text-transparent">
             Loading Projects...
           </div>
         </div>
@@ -134,17 +313,11 @@ export default function ProjectsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/30 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900/10 py-12 md:py-20">
-      {/* Animated Background Elements */}
+      {/* Animated Background Elements - FIXED: Removed inline styles */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-primary-500/10 rounded-full blur-3xl animate-float"></div>
-        <div
-          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary-500/10 rounded-full blur-3xl animate-float"
-          style={{ animationDelay: "2s" }}
-        ></div>
-        <div
-          className="absolute top-3/4 left-3/4 w-64 h-64 bg-accent-500/10 rounded-full blur-3xl animate-float"
-          style={{ animationDelay: "4s" }}
-        ></div>
+        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-primary-500/10 rounded-full blur-3xl animate-float" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary-500/10 rounded-full blur-3xl animate-float animation-delay-2000" />
+        <div className="absolute top-3/4 left-3/4 w-64 h-64 bg-accent-500/10 rounded-full blur-3xl animate-float animation-delay-4000" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
@@ -157,17 +330,21 @@ export default function ProjectsPage() {
         >
           <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-gradient-to-r from-primary-500/10 to-secondary-500/10 rounded-full border border-primary-500/20">
             <Sparkles className="w-4 h-4 text-primary-500" />
-            <span className="text-sm font-medium gradient-text">
+            <span className="text-sm font-medium bg-gradient-to-r from-primary-500 to-secondary-500 bg-clip-text text-transparent">
               Featured Projects
             </span>
             <Sparkles className="w-4 h-4 text-secondary-500" />
           </div>
 
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold mb-6 gradient-text text-shadow-lg">
-            Digital{" "}
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold mb-6">
+            <span className="bg-gradient-to-r from-primary-500 via-secondary-500 to-accent-500 bg-clip-text text-transparent">
+              Digital
+            </span>{" "}
             <span className="relative">
-              Creations
-              <div className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-primary-500 via-secondary-500 to-accent-500 rounded-full"></div>
+              <span className="bg-gradient-to-r from-primary-500 via-secondary-500 to-accent-500 bg-clip-text text-transparent">
+                Creations
+              </span>
+              <div className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-primary-500 via-secondary-500 to-accent-500 rounded-full" />
             </span>
           </h1>
 
@@ -220,14 +397,14 @@ export default function ProjectsPage() {
             ].map((stat, idx) => (
               <div
                 key={idx}
-                className="glass-card rounded-2xl p-6 text-center hover-lift"
+                className="backdrop-blur-md bg-white/30 dark:bg-gray-800/30 rounded-2xl p-6 text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-white/20 dark:border-gray-700/20"
               >
                 <div
                   className={`inline-flex items-center justify-center w-12 h-12 rounded-full ${stat.color} bg-opacity-20 mb-3`}
                 >
                   {stat.icon}
                 </div>
-                <div className="text-3xl font-bold gradient-text">
+                <div className="text-3xl font-bold bg-gradient-to-r from-primary-500 to-secondary-500 bg-clip-text text-transparent">
                   {stat.value}
                 </div>
                 <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
@@ -245,7 +422,7 @@ export default function ProjectsPage() {
           transition={{ delay: 0.4 }}
           className="mb-12"
         >
-          <div className="glass-card rounded-3xl p-6 md:p-8">
+          <div className="backdrop-blur-md bg-white/30 dark:bg-gray-800/30 rounded-3xl p-6 md:p-8 border border-white/20 dark:border-gray-700/20">
             <div className="mb-8">
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -261,7 +438,7 @@ export default function ProjectsPage() {
                 {searchQuery && (
                   <button
                     onClick={() => setSearchQuery("")}
-                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
                     aria-label="Clear search"
                     title="Clear search"
                   >
@@ -278,7 +455,8 @@ export default function ProjectsPage() {
                   Filter by Category
                 </h3>
                 <span className="px-3 py-1 bg-primary-500/10 text-primary-700 dark:text-primary-300 rounded-full text-sm">
-                  {filteredProjects.length} projects
+                  {filteredProjects.length} project
+                  {filteredProjects.length !== 1 ? "s" : ""}
                 </span>
               </div>
 
@@ -303,10 +481,10 @@ export default function ProjectsPage() {
                           : "bg-gray-200 dark:bg-gray-700"
                       }`}
                     >
-                      {categoryCounts[category]}
+                      {categoryCounts[category] || 0}
                     </span>
                     {selectedCategory === category && (
-                      <div className="absolute inset-0 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-xl blur-md opacity-50"></div>
+                      <div className="absolute inset-0 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-xl blur-md opacity-50 -z-10" />
                     )}
                   </button>
                 ))}
@@ -315,10 +493,7 @@ export default function ProjectsPage() {
               {(selectedCategory !== "All" || searchQuery) && (
                 <div className="flex justify-end">
                   <button
-                    onClick={() => {
-                      setSelectedCategory("All");
-                      setSearchQuery("");
-                    }}
+                    onClick={clearFilters}
                     className="px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition flex items-center gap-2"
                     aria-label="Clear all filters"
                     title="Clear all filters"
@@ -344,21 +519,21 @@ export default function ProjectsPage() {
             >
               {filteredProjects.map((project, index) => (
                 <motion.div
-                  key={index}
+                  key={project.title}
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
                   whileHover={{ y: -10, scale: 1.02 }}
                   className="group relative"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary-500/20 via-transparent to-secondary-500/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary-500/20 via-transparent to-secondary-500/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                  <div className="relative glass-card rounded-3xl overflow-hidden hover-lift h-full">
+                  <div className="relative backdrop-blur-md bg-white/30 dark:bg-gray-800/30 rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300 h-full border border-white/20 dark:border-gray-700/20">
                     {/* Project Header */}
                     <div
                       className={`p-8 bg-gradient-to-br ${project.color} relative overflow-hidden`}
                     >
-                      <div className="absolute inset-0 bg-black/10"></div>
+                      <div className="absolute inset-0 bg-black/10" />
                       <div className="relative z-10">
                         <div className="flex justify-between items-start mb-6">
                           <div className="text-5xl">{project.emoji}</div>
@@ -469,13 +644,13 @@ export default function ProjectsPage() {
                         </button>
 
                         <div className="flex gap-2">
-                          {project.link !== "#" && (
+                          {project.link && project.link !== "#" && (
                             <a
                               href={project.link}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="p-3 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl transition flex items-center justify-center group/link"
-                              aria-label={`View live demo of ${project.title}`}
+                              aria-label={`View live demo of ${project.title} (opens in new tab)`}
                               title="Live Demo"
                             >
                               <Eye
@@ -484,13 +659,13 @@ export default function ProjectsPage() {
                               />
                             </a>
                           )}
-                          {project.github !== "#" && (
+                          {project.github && project.github !== "#" && (
                             <a
                               href={project.github}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="p-3 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl transition flex items-center justify-center group/link"
-                              aria-label={`View source code for ${project.title}`}
+                              aria-label={`View source code for ${project.title} (opens in new tab)`}
                               title="View Code"
                             >
                               <Github
@@ -514,7 +689,7 @@ export default function ProjectsPage() {
               className="text-center py-20"
             >
               <div className="w-32 h-32 mx-auto mb-8 relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full blur-2xl opacity-20"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full blur-2xl opacity-20" />
                 <div className="relative w-full h-full flex items-center justify-center">
                   <Search className="w-16 h-16 text-gray-400" />
                 </div>
@@ -527,10 +702,7 @@ export default function ProjectsPage() {
                 looking for.
               </p>
               <button
-                onClick={() => {
-                  setSelectedCategory("All");
-                  setSearchQuery("");
-                }}
+                onClick={clearFilters}
                 className="px-8 py-3 bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white font-medium rounded-xl transition-all hover:shadow-lg"
                 aria-label="Clear all filters"
                 title="Clear all filters"
@@ -549,10 +721,10 @@ export default function ProjectsPage() {
           transition={{ duration: 0.8 }}
           className="relative overflow-hidden rounded-3xl mb-20"
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-primary-500 via-secondary-500 to-accent-500 animate-gradient-x"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-primary-500 via-secondary-500 to-accent-500 animate-gradient-x" />
           <div className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl p-12 text-center">
-            <div className="absolute top-0 left-0 w-32 h-32 bg-white/10 rounded-full -translate-x-16 -translate-y-16 blur-2xl"></div>
-            <div className="absolute bottom-0 right-0 w-32 h-32 bg-white/10 rounded-full translate-x-16 translate-y-16 blur-2xl"></div>
+            <div className="absolute top-0 left-0 w-32 h-32 bg-white/10 rounded-full -translate-x-16 -translate-y-16 blur-2xl" />
+            <div className="absolute bottom-0 right-0 w-32 h-32 bg-white/10 rounded-full translate-x-16 translate-y-16 blur-2xl" />
 
             <div className="relative z-10">
               <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">

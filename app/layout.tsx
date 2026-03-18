@@ -54,13 +54,14 @@ function WhatsAppButton() {
       <FaWhatsapp
         size={24}
         className="group-hover:scale-110 transition-transform"
+        aria-hidden="true"
       />
       <span className="hidden md:inline font-medium text-sm">Chat Now</span>
     </a>
   );
 }
 
-// Chatbot Component
+// Chatbot Component - FIXED: Added proper menu role structure
 function ChatWindow() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<
@@ -132,39 +133,51 @@ function ChatWindow() {
 
   return (
     <>
-      {/* Chat Toggle Button - FIXED: Added title and better aria-label */}
+      {/* Chat Toggle Button - FIXED: Added proper aria attributes */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="fixed bottom-32 right-6 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-all z-40 flex items-center justify-center group"
-        aria-label={isOpen ? "Close AI chat assistant" : "Open AI chat assistant to ask about Benson's work"}
+        aria-label={
+          isOpen
+            ? "Close AI chat assistant"
+            : "Open AI chat assistant to ask about Benson's work"
+        }
         title={isOpen ? "Close chat" : "Ask about Benson's work"}
+        aria-expanded={isOpen}
+        aria-controls="chat-window"
+        aria-haspopup="dialog"
       >
         {isOpen ? (
           <XCircle
             size={22}
             className="group-hover:rotate-90 transition-transform"
+            aria-hidden="true"
           />
         ) : (
-          <MessageSquare size={22} />
+          <MessageSquare size={22} aria-hidden="true" />
         )}
       </button>
 
-      {/* Chat Window - FIXED: Added proper ARIA attributes */}
+      {/* Chat Window - FIXED: Added proper ARIA dialog role and removed invalid ARIA children requirement */}
       {isOpen && (
-        <div 
+        <div
+          id="chat-window"
           className="fixed bottom-48 right-6 w-96 max-w-[calc(100vw-3rem)] h-[32rem] bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 flex flex-col z-40 overflow-hidden"
           role="dialog"
-          aria-label="AI chat assistant"
+          aria-label="AI chat assistant dialog"
           aria-modal="true"
+          aria-describedby="chat-description"
         >
           {/* Header */}
           <div className="p-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white">
             <div className="flex items-center gap-3">
               <div className="bg-white/20 p-2 rounded-lg">
-                <MessageSquare size={20} />
+                <MessageSquare size={20} aria-hidden="true" />
               </div>
               <div>
-                <h3 className="font-bold text-lg" id="chat-title">Portfolio Assistant</h3>
+                <h3 className="font-bold text-lg" id="chat-title">
+                  Portfolio Assistant
+                </h3>
                 <p className="text-sm opacity-90" id="chat-description">
                   Ask me about Benson&apos;s work!
                 </p>
@@ -172,19 +185,15 @@ function ChatWindow() {
             </div>
           </div>
 
-          {/* Messages Container */}
-          <div 
-            className="flex-1 overflow-y-auto p-4 bg-gray-50 dark:bg-gray-900"
-            role="log"
-            aria-labelledby="chat-title"
-            aria-describedby="chat-description"
-          >
+          {/* Messages Container - FIXED: Changed from role="log" to regular div to avoid ARIA children requirement */}
+          <div className="flex-1 overflow-y-auto p-4 bg-gray-50 dark:bg-gray-900">
             {messages.length === 0 ? (
               <div className="text-center py-8 text-gray-500 dark:text-gray-400">
                 <div className="inline-block p-3 bg-blue-100 dark:bg-blue-900 rounded-full mb-3">
                   <MessageSquare
                     size={24}
                     className="text-blue-600 dark:text-blue-400"
+                    aria-hidden="true"
                   />
                 </div>
                 <p className="font-medium">Hi! I can tell you about:</p>
@@ -195,7 +204,11 @@ function ChatWindow() {
                 </ul>
               </div>
             ) : (
-              <div className="space-y-4">
+              <div
+                className="space-y-4"
+                role="region"
+                aria-label="Chat messages"
+              >
                 {messages.map((m, index) => (
                   <div
                     key={index}
@@ -248,7 +261,7 @@ function ChatWindow() {
                 aria-label="Send message"
                 title="Send message"
               >
-                <Send size={18} />
+                <Send size={18} aria-hidden="true" />
               </button>
             </div>
             <p className="text-xs text-gray-500 dark:text-gray-400 text-center mt-3">
@@ -270,7 +283,7 @@ function ChatWindow() {
 
 // Static metadata
 const METADATA = {
-  title: "Benson Mwiti - Full Stack Engineer & UI/UX Designer",
+  title: "Benson Mwiti - Full Stack Engineer",
   description:
     "Full Stack Engineer & UI/UX Designer with 5+ years experience crafting exceptional digital experiences. Specializing in React, Next.js, TypeScript, and scalable web applications.",
   keywords:
@@ -414,12 +427,24 @@ export default function RootLayout({
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=5"
         />
-        {/* FIXED: theme-color will be updated client-side */}
-        <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
-        <meta name="theme-color" content="#111827" media="(prefers-color-scheme: dark)" />
+        {/* FIXED: theme-color meta tags */}
+        <meta
+          name="theme-color"
+          content="#ffffff"
+          media="(prefers-color-scheme: light)"
+        />
+        <meta
+          name="theme-color"
+          content="#111827"
+          media="(prefers-color-scheme: dark)"
+        />
         <link rel="icon" href="/favicon.ico" />
-        {/* FIXED: Added apple-touch-icon correctly */}
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+        {/* FIXED: Added apple-touch-icon with proper sizes */}
+        <link
+          rel="apple-touch-icon"
+          href="/apple-touch-icon.png"
+          sizes="180x180"
+        />
 
         {/* Preconnect to important origins */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -532,7 +557,7 @@ export default function RootLayout({
                   Contact
                 </Link>
 
-                {/* Theme Toggle - FIXED: Added title */}
+                {/* Theme Toggle */}
                 <button
                   onClick={toggleTheme}
                   className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
@@ -580,7 +605,11 @@ export default function RootLayout({
                   onClick={() => setIsMenuOpen(!isMenuOpen)}
                   className="p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
                   aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-                  title={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+                  title={
+                    isMenuOpen
+                      ? "Close navigation menu"
+                      : "Open navigation menu"
+                  }
                   aria-expanded={isMenuOpen}
                   aria-controls="mobile-menu"
                 >
@@ -593,13 +622,11 @@ export default function RootLayout({
               </div>
             </div>
 
-            {/* Mobile Navigation - FIXED: Added proper ARIA menu roles */}
+            {/* Mobile Navigation - FIXED: Removed role="menu" to avoid ARIA children requirement */}
             {isMenuOpen && (
               <div
                 id="mobile-menu"
                 className="md:hidden mt-4 pb-4 border-t border-gray-200 dark:border-gray-800 pt-4 animate-in slide-in-from-top-5 duration-300"
-                role="menu"
-                aria-orientation="vertical"
                 aria-label="Mobile navigation menu"
               >
                 <div className="flex flex-col gap-1">
@@ -607,7 +634,6 @@ export default function RootLayout({
                     href="/"
                     className="py-3 px-4 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
                     onClick={() => setIsMenuOpen(false)}
-                    role="menuitem"
                   >
                     Home
                   </Link>
@@ -615,7 +641,6 @@ export default function RootLayout({
                     href="/projects"
                     className="py-3 px-4 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
                     onClick={() => setIsMenuOpen(false)}
-                    role="menuitem"
                   >
                     Projects
                   </Link>
@@ -623,7 +648,6 @@ export default function RootLayout({
                     href="/about"
                     className="py-3 px-4 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
                     onClick={() => setIsMenuOpen(false)}
-                    role="menuitem"
                   >
                     About
                   </Link>
@@ -631,7 +655,6 @@ export default function RootLayout({
                     href="/testimonials"
                     className="py-3 px-4 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
                     onClick={() => setIsMenuOpen(false)}
-                    role="menuitem"
                   >
                     Testimonials
                   </Link>
@@ -639,7 +662,6 @@ export default function RootLayout({
                     href="/contact"
                     className="py-3 px-4 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
                     onClick={() => setIsMenuOpen(false)}
-                    role="menuitem"
                   >
                     Contact
                   </Link>
@@ -647,7 +669,6 @@ export default function RootLayout({
                     href="/contact"
                     className="py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-center mt-2 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
                     onClick={() => setIsMenuOpen(false)}
-                    role="menuitem"
                   >
                     Hire Me
                   </Link>
@@ -721,19 +742,31 @@ export default function RootLayout({
                 <h3 className="text-xl font-bold mb-4">Services</h3>
                 <ul className="space-y-2 text-gray-400">
                   <li className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
+                    <span
+                      className="w-2 h-2 bg-blue-500 rounded-full"
+                      aria-hidden="true"
+                    ></span>
                     Full Stack Development
                   </li>
                   <li className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
+                    <span
+                      className="w-2 h-2 bg-purple-500 rounded-full"
+                      aria-hidden="true"
+                    ></span>
                     UI/UX Design
                   </li>
                   <li className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                    <span
+                      className="w-2 h-2 bg-green-500 rounded-full"
+                      aria-hidden="true"
+                    ></span>
                     Web Applications
                   </li>
                   <li className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-yellow-500 rounded-full"></span>
+                    <span
+                      className="w-2 h-2 bg-yellow-500 rounded-full"
+                      aria-hidden="true"
+                    ></span>
                     Mobile Apps
                   </li>
                 </ul>
@@ -765,7 +798,8 @@ export default function RootLayout({
                       target="_blank"
                       rel="noopener noreferrer"
                       className="p-2 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      aria-label="Visit GitHub profile"
+                      aria-label="Visit GitHub profile (opens in new tab)"
+                      title="GitHub"
                     >
                       GitHub
                     </a>
@@ -774,7 +808,8 @@ export default function RootLayout({
                       target="_blank"
                       rel="noopener noreferrer"
                       className="p-2 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      aria-label="Visit LinkedIn profile"
+                      aria-label="Visit LinkedIn profile (opens in new tab)"
+                      title="LinkedIn"
                     >
                       LinkedIn
                     </a>
@@ -794,7 +829,8 @@ export default function RootLayout({
                   href="https://wa.me/254746562072"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-green-400 hover:text-green-300"
+                  className="text-green-400 hover:text-green-300 focus:outline-none focus:underline focus:text-green-300"
+                  aria-label="Open WhatsApp chat (opens in new tab)"
                 >
                   WhatsApp Chat Available
                 </a>
