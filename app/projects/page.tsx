@@ -103,7 +103,7 @@ export default function ProjectsPage() {
         "Lucide React",
       ],
       status: "Live",
-      link: "https://https://soma-analytics-dashboard.vercel.app",
+      link: "https://soma-analytics-dashboard.vercel.app/",
       emoji: "📊",
       features: [
         "Real-time Nairobi time updates",
@@ -115,7 +115,7 @@ export default function ProjectsPage() {
         "Export options (CSV, PDF, Excel)",
         "Kenyan flag themed design",
       ],
-      github: "https://github.com/mamoshi572/soma-analytics",
+      github: "https://github.com/mamoshi572/soma-analytics-dashboard",
       problem:
         "Kenyan businesses lack intuitive, real-time dashboards to monitor key performance metrics with local context (KES currency, Nairobi time, M-Pesa transactions).",
       solution:
@@ -153,7 +153,7 @@ export default function ProjectsPage() {
         "Payment Integration",
       ],
 
-         github: "https://github.com/mamoshi572/mamoshi-kitchen",
+      github: "https://github.com/mamoshi572/mamoshi-kitchen",
       timeline: "2 weeks",
       role: "Full Stack Developer",
       color: "from-orange-500 to-red-500",
