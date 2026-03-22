@@ -6,9 +6,9 @@
 
 @layer base {
   :root {
-    --gradient-start: #667eea;
-    --gradient-end: #764ba2;
-    --gradient-accent: #f093fb;
+    --gradient-start: #fbfbfe;
+    --gradient-end: #a597b3;
+    --gradient-accent: #000000;
   }
 
   html {
