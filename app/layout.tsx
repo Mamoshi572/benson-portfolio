@@ -28,8 +28,8 @@ function LoadingSpinner() {
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="flex flex-col items-center gap-4">
-        <Loader2 className="w-12 h-12 text-blue-600 animate-spin" />
-        <p className="text-gray-600 dark:text-gray-400">Loading portfolio...</p>
+        <Loader2 className="w-12 h-12 text-[#F9A26C] animate-spin" />
+        <p className="text-white/80">Loading portfolio...</p>
       </div>
     </div>
   );
@@ -47,7 +47,7 @@ function WhatsAppButton() {
       href={whatsappUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition-all z-40 flex items-center gap-2 group"
+      className="fixed bottom-6 right-6 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:bg-[#128C7E] transition-all z-40 flex items-center gap-2 group"
       aria-label="Contact Benson on WhatsApp"
       title="Chat on WhatsApp"
     >
@@ -61,7 +61,7 @@ function WhatsAppButton() {
   );
 }
 
-// Chatbot Component - FIXED: Added proper menu role structure
+// Chatbot Component
 function ChatWindow() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<
@@ -133,10 +133,10 @@ function ChatWindow() {
 
   return (
     <>
-      {/* Chat Toggle Button - FIXED: Added proper aria attributes */}
+      {/* Chat Toggle Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-32 right-6 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-all z-40 flex items-center justify-center group"
+        className="fixed bottom-32 right-6 bg-[#F9A26C] text-white p-4 rounded-full shadow-lg hover:bg-[#e8894a] transition-all z-40 flex items-center justify-center group"
         aria-label={
           isOpen
             ? "Close AI chat assistant"
@@ -158,7 +158,7 @@ function ChatWindow() {
         )}
       </button>
 
-      {/* Chat Window - FIXED: Added proper ARIA dialog role and removed invalid ARIA children requirement */}
+      {/* Chat Window */}
       {isOpen && (
         <div
           id="chat-window"
@@ -169,7 +169,7 @@ function ChatWindow() {
           aria-describedby="chat-description"
         >
           {/* Header */}
-          <div className="p-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white">
+          <div className="p-4 bg-gradient-to-r from-[#0F4C5C] to-[#2C7A7B] text-white">
             <div className="flex items-center gap-3">
               <div className="bg-white/20 p-2 rounded-lg">
                 <MessageSquare size={20} aria-hidden="true" />
@@ -185,14 +185,14 @@ function ChatWindow() {
             </div>
           </div>
 
-          {/* Messages Container - FIXED: Changed from role="log" to regular div to avoid ARIA children requirement */}
+          {/* Messages Container */}
           <div className="flex-1 overflow-y-auto p-4 bg-gray-50 dark:bg-gray-900">
             {messages.length === 0 ? (
               <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-                <div className="inline-block p-3 bg-blue-100 dark:bg-blue-900 rounded-full mb-3">
+                <div className="inline-block p-3 bg-[#0F4C5C]/10 dark:bg-[#0F4C5C]/20 rounded-full mb-3">
                   <MessageSquare
                     size={24}
-                    className="text-blue-600 dark:text-blue-400"
+                    className="text-[#0F4C5C] dark:text-[#F9A26C]"
                     aria-hidden="true"
                   />
                 </div>
@@ -217,7 +217,7 @@ function ChatWindow() {
                     <div
                       className={`max-w-[80%] rounded-2xl px-4 py-3 ${
                         m.role === "user"
-                          ? "bg-blue-600 text-white rounded-br-none"
+                          ? "bg-[#F9A26C] text-white rounded-br-none"
                           : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-bl-none"
                       }`}
                     >
@@ -250,14 +250,14 @@ function ChatWindow() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask about projects, skills, or contact..."
-                className="flex-1 border border-gray-300 dark:border-gray-600 rounded-full px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
+                className="flex-1 border border-gray-300 dark:border-gray-600 rounded-full px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#F9A26C] focus:border-transparent bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
                 disabled={isLoading}
                 aria-label="Chat message input"
               />
               <button
                 type="submit"
                 disabled={!input.trim() || isLoading}
-                className="bg-blue-600 text-white p-3 rounded-full hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="bg-[#F9A26C] text-white p-3 rounded-full hover:bg-[#e8894a] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 aria-label="Send message"
                 title="Send message"
               >
@@ -268,7 +268,7 @@ function ChatWindow() {
               AI assistant •{" "}
               <a
                 href="/contact"
-                className="text-blue-600 dark:text-blue-400 hover:underline"
+                className="text-[#F9A26C] dark:text-[#F9A26C] hover:underline"
               >
                 Contact directly
               </a>{" "}
@@ -427,19 +427,18 @@ export default function RootLayout({
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=5"
         />
-        {/* FIXED: theme-color meta tags */}
+        {/* Theme color based on dark mode preference */}
         <meta
           name="theme-color"
-          content="#ffffff"
+          content="#0F4C5C"
           media="(prefers-color-scheme: light)"
         />
         <meta
           name="theme-color"
-          content="#111827"
+          content="#1E2A2E"
           media="(prefers-color-scheme: dark)"
         />
         <link rel="icon" href="/favicon.ico" />
-        {/* FIXED: Added apple-touch-icon with proper sizes */}
         <link
           rel="apple-touch-icon"
           href="/apple-touch-icon.png"
@@ -489,21 +488,22 @@ export default function RootLayout({
           }}
         />
       </head>
+      {/* UPDATED: Ocean Depths gradient with dark mode handling */}
       <body
-        className={`${inter.className} bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300`}
+        className={`${inter.className} bg-gradient-to-br from-[#0F4C5C] via-[#2C7A7B] to-[#F9A26C] dark:from-[#0F4C5C] dark:via-[#2C7A7B] dark:to-[#F9A26C] text-gray-900 dark:text-white transition-colors duration-300`}
         suppressHydrationWarning
       >
         {/* Skip to main content for accessibility */}
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-50 bg-blue-600 text-white px-4 py-2 rounded-lg"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-50 bg-[#F9A26C] text-white px-4 py-2 rounded-lg"
         >
           Skip to main content
         </a>
 
         {/* Navigation */}
         <nav
-          className="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 supports-[backdrop-filter]:bg-white/60 supports-[backdrop-filter]:dark:bg-gray-900/60"
+          className="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-white/20 dark:border-gray-800 supports-[backdrop-filter]:bg-white/60 supports-[backdrop-filter]:dark:bg-gray-900/60"
           role="navigation"
           aria-label="Main navigation"
         >
@@ -512,47 +512,47 @@ export default function RootLayout({
               {/* Logo */}
               <Link
                 href="/"
-                className="flex items-center gap-2 text-xl font-bold focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 rounded-lg p-1"
+                className="flex items-center gap-2 text-xl font-bold focus:outline-none focus:ring-2 focus:ring-[#F9A26C] focus:ring-offset-2 dark:focus:ring-offset-gray-900 rounded-lg p-1"
                 aria-label="Benson Mwiti Home"
               >
                 <Code2
-                  className="text-blue-600 dark:text-blue-400"
+                  className="text-[#F9A26C] dark:text-[#F9A26C]"
                   size={24}
                   aria-hidden="true"
                 />
-                <span>Benson Mwiti</span>
+                <span className="text-white dark:text-white">Benson Mwiti</span>
               </Link>
 
               {/* Desktop Navigation */}
               <div className="hidden md:flex items-center gap-6">
                 <Link
                   href="/"
-                  className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 rounded-lg p-2"
+                  className="text-white hover:text-[#F9A26C] dark:text-white dark:hover:text-[#F9A26C] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#F9A26C] focus:ring-offset-2 dark:focus:ring-offset-gray-900 rounded-lg p-2"
                   aria-current="page"
                 >
                   Home
                 </Link>
                 <Link
                   href="/projects"
-                  className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 rounded-lg p-2"
+                  className="text-white hover:text-[#F9A26C] dark:text-white dark:hover:text-[#F9A26C] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#F9A26C] focus:ring-offset-2 dark:focus:ring-offset-gray-900 rounded-lg p-2"
                 >
                   Projects
                 </Link>
                 <Link
                   href="/about"
-                  className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 rounded-lg p-2"
+                  className="text-white hover:text-[#F9A26C] dark:text-white dark:hover:text-[#F9A26C] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#F9A26C] focus:ring-offset-2 dark:focus:ring-offset-gray-900 rounded-lg p-2"
                 >
                   About
                 </Link>
                 <Link
                   href="/testimonials"
-                  className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 rounded-lg p-2"
+                  className="text-white hover:text-[#F9A26C] dark:text-white dark:hover:text-[#F9A26C] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#F9A26C] focus:ring-offset-2 dark:focus:ring-offset-gray-900 rounded-lg p-2"
                 >
                   Testimonials
                 </Link>
                 <Link
                   href="/contact"
-                  className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 rounded-lg p-2"
+                  className="text-white hover:text-[#F9A26C] dark:text-white dark:hover:text-[#F9A26C] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#F9A26C] focus:ring-offset-2 dark:focus:ring-offset-gray-900 rounded-lg p-2"
                 >
                   Contact
                 </Link>
@@ -560,7 +560,7 @@ export default function RootLayout({
                 {/* Theme Toggle */}
                 <button
                   onClick={toggleTheme}
-                  className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                  className="p-2 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#F9A26C] focus:ring-offset-2 dark:focus:ring-offset-gray-900"
                   aria-label={
                     isDark ? "Switch to light mode" : "Switch to dark mode"
                   }
@@ -577,7 +577,7 @@ export default function RootLayout({
 
                 <Link
                   href="/contact"
-                  className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 text-white font-medium rounded-lg transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 shadow-lg hover:shadow-xl"
+                  className="px-5 py-2.5 bg-[#F9A26C] hover:bg-[#e8894a] text-white font-medium rounded-lg transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#F9A26C] focus:ring-offset-2 dark:focus:ring-offset-gray-900 shadow-lg hover:shadow-xl"
                 >
                   Hire Me
                 </Link>
@@ -587,7 +587,7 @@ export default function RootLayout({
               <div className="flex items-center gap-3 md:hidden">
                 <button
                   onClick={toggleTheme}
-                  className="p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                  className="p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F9A26C] focus:ring-offset-2 dark:focus:ring-offset-gray-900 text-white"
                   aria-label={
                     isDark ? "Switch to light mode" : "Switch to dark mode"
                   }
@@ -603,7 +603,7 @@ export default function RootLayout({
                 </button>
                 <button
                   onClick={() => setIsMenuOpen(!isMenuOpen)}
-                  className="p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                  className="p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F9A26C] focus:ring-offset-2 dark:focus:ring-offset-gray-900 text-white"
                   aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                   title={
                     isMenuOpen
@@ -622,52 +622,52 @@ export default function RootLayout({
               </div>
             </div>
 
-            {/* Mobile Navigation - FIXED: Removed role="menu" to avoid ARIA children requirement */}
+            {/* Mobile Navigation */}
             {isMenuOpen && (
               <div
                 id="mobile-menu"
-                className="md:hidden mt-4 pb-4 border-t border-gray-200 dark:border-gray-800 pt-4 animate-in slide-in-from-top-5 duration-300"
+                className="md:hidden mt-4 pb-4 border-t border-white/20 pt-4 animate-in slide-in-from-top-5 duration-300"
                 aria-label="Mobile navigation menu"
               >
                 <div className="flex flex-col gap-1">
                   <Link
                     href="/"
-                    className="py-3 px-4 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                    className="py-3 px-4 hover:bg-white/10 rounded-lg transition-colors duration-200 text-white"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Home
                   </Link>
                   <Link
                     href="/projects"
-                    className="py-3 px-4 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                    className="py-3 px-4 hover:bg-white/10 rounded-lg transition-colors duration-200 text-white"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Projects
                   </Link>
                   <Link
                     href="/about"
-                    className="py-3 px-4 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                    className="py-3 px-4 hover:bg-white/10 rounded-lg transition-colors duration-200 text-white"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     About
                   </Link>
                   <Link
                     href="/testimonials"
-                    className="py-3 px-4 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                    className="py-3 px-4 hover:bg-white/10 rounded-lg transition-colors duration-200 text-white"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Testimonials
                   </Link>
                   <Link
                     href="/contact"
-                    className="py-3 px-4 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                    className="py-3 px-4 hover:bg-white/10 rounded-lg transition-colors duration-200 text-white"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Contact
                   </Link>
                   <Link
                     href="/contact"
-                    className="py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-center mt-2 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                    className="py-3 px-4 bg-[#F9A26C] hover:bg-[#e8894a] text-white rounded-lg text-center mt-2 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#F9A26C] focus:ring-offset-2 dark:focus:ring-offset-gray-900"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Hire Me
@@ -701,7 +701,7 @@ export default function RootLayout({
 
         {/* Footer */}
         <footer
-          className="bg-gray-900 dark:bg-black text-white py-12"
+          className="bg-[#0F4C5C]/90 dark:bg-[#0F4C5C]/95 text-white py-12 backdrop-blur-sm"
           role="contentinfo"
           aria-label="Site footer"
         >
@@ -709,7 +709,7 @@ export default function RootLayout({
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
               <div>
                 <h3 className="text-xl font-bold mb-4">Benson Mwiti</h3>
-                <p className="text-gray-400 mb-4 leading-relaxed">
+                <p className="text-white/80 mb-4 leading-relaxed">
                   Full Stack Engineer & UI/UX Designer crafting exceptional
                   digital experiences through clean code and intuitive design.
                 </p>
@@ -728,7 +728,7 @@ export default function RootLayout({
                     <li key={item.name}>
                       <Link
                         href={item.path}
-                        className="text-gray-400 hover:text-white transition-colors duration-200 focus:outline-none focus:text-white focus:underline"
+                        className="text-white/70 hover:text-white transition-colors duration-200 focus:outline-none focus:text-white focus:underline"
                         aria-label={`Go to ${item.name}`}
                       >
                         {item.name}
@@ -740,31 +740,31 @@ export default function RootLayout({
 
               <div>
                 <h3 className="text-xl font-bold mb-4">Services</h3>
-                <ul className="space-y-2 text-gray-400">
+                <ul className="space-y-2 text-white/70">
                   <li className="flex items-center gap-2">
                     <span
-                      className="w-2 h-2 bg-blue-500 rounded-full"
+                      className="w-2 h-2 bg-[#F9A26C] rounded-full"
                       aria-hidden="true"
                     ></span>
                     Full Stack Development
                   </li>
                   <li className="flex items-center gap-2">
                     <span
-                      className="w-2 h-2 bg-purple-500 rounded-full"
+                      className="w-2 h-2 bg-[#F9A26C] rounded-full"
                       aria-hidden="true"
                     ></span>
                     UI/UX Design
                   </li>
                   <li className="flex items-center gap-2">
                     <span
-                      className="w-2 h-2 bg-green-500 rounded-full"
+                      className="w-2 h-2 bg-[#F9A26C] rounded-full"
                       aria-hidden="true"
                     ></span>
                     Web Applications
                   </li>
                   <li className="flex items-center gap-2">
                     <span
-                      className="w-2 h-2 bg-yellow-500 rounded-full"
+                      className="w-2 h-2 bg-[#F9A26C] rounded-full"
                       aria-hidden="true"
                     ></span>
                     Mobile Apps
@@ -774,7 +774,7 @@ export default function RootLayout({
 
               <div>
                 <h3 className="text-xl font-bold mb-4">Contact</h3>
-                <div className="space-y-3 text-gray-400">
+                <div className="space-y-3 text-white/70">
                   <p className="flex items-center gap-2">
                     <span aria-hidden="true">📍</span>
                     Nairobi, Kenya
@@ -797,7 +797,7 @@ export default function RootLayout({
                       href="https://github.com/mamoshi572"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#F9A26C]"
                       aria-label="Visit GitHub profile (opens in new tab)"
                       title="GitHub"
                     >
@@ -807,7 +807,7 @@ export default function RootLayout({
                       href="https://www.linkedin.com/in/benson-mwiti-87657031b"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#F9A26C]"
                       aria-label="Visit LinkedIn profile (opens in new tab)"
                       title="LinkedIn"
                     >
@@ -818,7 +818,7 @@ export default function RootLayout({
               </div>
             </div>
 
-            <div className="pt-8 border-t border-gray-800 text-center text-gray-400">
+            <div className="pt-8 border-t border-white/20 text-center text-white/60">
               <p>
                 © {new Date().getFullYear()} Benson Mwiti. All rights reserved.
               </p>
@@ -829,13 +829,13 @@ export default function RootLayout({
                   href="https://wa.me/254746562072"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-green-400 hover:text-green-300 focus:outline-none focus:underline focus:text-green-300"
+                  className="text-[#F9A26C] hover:text-white focus:outline-none focus:underline"
                   aria-label="Open WhatsApp chat (opens in new tab)"
                 >
                   WhatsApp Chat Available
                 </a>
               </p>
-              <p className="text-xs mt-2 text-gray-500">
+              <p className="text-xs mt-2 text-white/40">
                 AI Assistant powered by OpenAI • Last updated:{" "}
                 {new Date().toLocaleDateString()}
               </p>
@@ -843,7 +843,7 @@ export default function RootLayout({
           </div>
         </footer>
 
-        {/* Performance monitoring script (non-blocking) */}
+        {/* Performance monitoring script */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
