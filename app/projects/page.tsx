@@ -89,6 +89,47 @@ export default function ProjectsPage() {
       color: "from-indigo-500 to-orange-500",
       bgImage: "/images/projects/tenda-bg.jpg",
     },
+
+    {
+  title: "Comfort Zone Homes",
+  description:
+    "Modern real estate website showcasing luxury properties with responsive design, property listings, and contact functionality.",
+  category: "Full Stack",
+  tech: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Netlify"],
+  status: "Live",
+  link: "https://comfort-zone-homes.netlify.app",
+  emoji: "🏠",
+  features: [
+    "Property listings with detailed cards",
+    "Responsive mobile-first design",
+    "Contact form with validation",
+    "Smooth scroll navigation",
+    "Services showcase section",
+    "Property search & filtering",
+  ],
+  github: "https://github.com/Mamoshi572/comfort-zone-homes",
+  problem:
+    "Real estate agencies in Kenya lack modern, responsive websites that effectively showcase properties and provide a seamless user experience across all devices.",
+  solution:
+    "Built a fully responsive real estate platform with a clean, modern UI that highlights property listings, services, and makes it easy for potential buyers to get in touch. The site is optimized for both desktop and mobile viewing.",
+  results: [
+    "Fully responsive website working on all devices",
+    "Optimized load times with 90+ Google PageSpeed score",
+    "Interactive property cards with detailed information",
+    "Deployed and live on Netlify with continuous deployment",
+  ],
+  timeline: "2 weeks",
+  challenges: [
+    "Creating a fully responsive grid layout for property cards",
+    "Implementing smooth mobile navigation menu",
+    "Optimizing images for fast load times",
+    "Ensuring cross-browser compatibility",
+  ],
+  role: "Full Stack Developer & UI Designer",
+  color: "from-orange-500 to-red-500",
+  bgImage: "/images/projects/comfort-zone-bg.jpg",
+},
+
     {
       title: "Soma Analytics Dashboard",
       description:
