@@ -87,6 +87,7 @@ export default function ProjectsPage() {
       ],
       role: "Full Stack Developer & Product Owner",
       color: "from-indigo-500 to-orange-500",
+      bgImage: "/images/projects/tenda-bg.jpg",
     },
     {
       title: "Comfort Zone Homes",
@@ -122,6 +123,7 @@ export default function ProjectsPage() {
       ],
       role: "Full Stack Developer & UI Designer",
       color: "from-orange-500 to-red-500",
+      bgImage: "/images/projects/comfort-zone-bg.jpg",
     },
     {
       title: "Soma Analytics Dashboard",
@@ -169,6 +171,7 @@ export default function ProjectsPage() {
       ],
       role: "Full Stack Developer & UI Designer",
       color: "from-green-500 via-black to-red-500",
+      bgImage: "/images/projects/soma-bg.jpg",
     },
     {
       title: "Ashen Bites Website",
@@ -189,6 +192,7 @@ export default function ProjectsPage() {
       timeline: "2 weeks",
       role: "Full Stack Developer",
       color: "from-orange-500 to-red-500",
+      bgImage: "/images/projects/ashen-bites-bg.jpg",
     },
     {
       title: "Styles N Tunes",
@@ -208,6 +212,7 @@ export default function ProjectsPage() {
       timeline: "3 weeks",
       role: "Frontend Developer",
       color: "from-purple-500 to-pink-500",
+      bgImage: "/images/projects/styles-tunes-bg.jpg",
     },
     {
       title: "GreenLeaf Dispensary",
@@ -227,6 +232,7 @@ export default function ProjectsPage() {
       timeline: "4 weeks",
       role: "Full Stack Developer",
       color: "from-green-500 to-emerald-500",
+      bgImage: "/images/projects/greenleaf-bg.jpg",
     },
     {
       title: "AgriInfo Offline App",
@@ -246,6 +252,7 @@ export default function ProjectsPage() {
       timeline: "5 weeks",
       role: "Full Stack Developer",
       color: "from-green-600 to-teal-500",
+      bgImage: "/images/projects/agriinfo-bg.jpg",
     },
     {
       title: "Modeling & Services Portfolio",
@@ -265,6 +272,7 @@ export default function ProjectsPage() {
       timeline: "2 weeks",
       role: "Full Stack Developer",
       color: "from-blue-500 to-cyan-500",
+      bgImage: "/images/projects/modeling-bg.jpg",
     },
     {
       title: "FinTech Mobile Application",
@@ -283,6 +291,7 @@ export default function ProjectsPage() {
       timeline: "6+ weeks",
       role: "Mobile Developer",
       color: "from-indigo-500 to-blue-500",
+      bgImage: "/images/projects/fintech-bg.jpg",
     },
     {
       title: "EcoTrack Sustainability App",
@@ -302,6 +311,7 @@ export default function ProjectsPage() {
       timeline: "5 weeks",
       role: "Mobile Developer",
       color: "from-emerald-500 to-green-500",
+      bgImage: "/images/projects/ecotrack-bg.jpg",
     },
     {
       title: "Portfolio 2024",
@@ -321,6 +331,7 @@ export default function ProjectsPage() {
       timeline: "3 weeks",
       role: "Designer & Developer",
       color: "from-primary-500 to-secondary-500",
+      bgImage: "/images/projects/portfolio-bg.jpg",
     },
   ];
 
