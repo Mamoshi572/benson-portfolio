@@ -87,49 +87,42 @@ export default function ProjectsPage() {
       ],
       role: "Full Stack Developer & Product Owner",
       color: "from-indigo-500 to-orange-500",
-      bgImage: "/images/projects/tenda-bg.jpg",
     },
-
     {
-  title: "Comfort Zone Homes",
-  description:
-    "Modern real estate website showcasing luxury properties with responsive design, property listings, and contact functionality.",
-  category: "Full Stack",
-  tech: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Netlify"],
-  status: "Live",
-  link: "https://comfort-zone-homes.netlify.app",
-  emoji: "🏠",
-  features: [
-    "Property listings with detailed cards",
-    "Responsive mobile-first design",
-    "Contact form with validation",
-    "Smooth scroll navigation",
-    "Services showcase section",
-    "Property search & filtering",
-  ],
-  github: "https://github.com/Mamoshi572/comfort-zone-homes",
-  problem:
-    "Real estate agencies in Kenya lack modern, responsive websites that effectively showcase properties and provide a seamless user experience across all devices.",
-  solution:
-    "Built a fully responsive real estate platform with a clean, modern UI that highlights property listings, services, and makes it easy for potential buyers to get in touch. The site is optimized for both desktop and mobile viewing.",
-  results: [
-    "Fully responsive website working on all devices",
-    "Optimized load times with 90+ Google PageSpeed score",
-    "Interactive property cards with detailed information",
-    "Deployed and live on Netlify with continuous deployment",
-  ],
-  timeline: "2 weeks",
-  challenges: [
-    "Creating a fully responsive grid layout for property cards",
-    "Implementing smooth mobile navigation menu",
-    "Optimizing images for fast load times",
-    "Ensuring cross-browser compatibility",
-  ],
-  role: "Full Stack Developer & UI Designer",
-  color: "from-orange-500 to-red-500",
-  bgImage: "/images/projects/comfort-zone-bg.jpg",
-},
-
+      title: "Comfort Zone Homes",
+      description:
+        "Modern real estate website showcasing luxury properties with responsive design, property listings, and contact functionality.",
+      category: "Full Stack",
+      tech: ["HTML5", "CSS3", "JavaScript", "Netlify"],
+      status: "Live",
+      link: "https://comfort-zone-homes.netlify.app",
+      emoji: "🏠",
+      features: [
+        "Property listings with detailed cards",
+        "Responsive mobile-first design",
+        "Contact form with validation",
+        "Smooth scroll navigation",
+        "Services showcase section",
+      ],
+      github: "https://github.com/Mamoshi572/comfort-zone-homes",
+      problem:
+        "Real estate agencies in Kenya lack modern, responsive websites that effectively showcase properties.",
+      solution:
+        "Built a fully responsive real estate platform with a clean, modern UI highlighting property listings and services.",
+      results: [
+        "Fully responsive website working on all devices",
+        "Optimized load times with 90+ Google PageSpeed score",
+        "Deployed live on Netlify with continuous deployment",
+      ],
+      timeline: "2 weeks",
+      challenges: [
+        "Creating responsive grid layout for property cards",
+        "Implementing smooth mobile navigation menu",
+        "Optimizing images for fast load times",
+      ],
+      role: "Full Stack Developer & UI Designer",
+      color: "from-orange-500 to-red-500",
+    },
     {
       title: "Soma Analytics Dashboard",
       description:
@@ -176,7 +169,6 @@ export default function ProjectsPage() {
       ],
       role: "Full Stack Developer & UI Designer",
       color: "from-green-500 via-black to-red-500",
-      bgImage: "/images/projects/soma-bg.jpg",
     },
     {
       title: "Ashen Bites Website",
@@ -193,12 +185,10 @@ export default function ProjectsPage() {
         "Responsive Design",
         "Payment Integration",
       ],
-
       github: "https://github.com/mamoshi572/mamoshi-kitchen",
       timeline: "2 weeks",
       role: "Full Stack Developer",
       color: "from-orange-500 to-red-500",
-      bgImage: "/images/projects/ashen-bites-bg.jpg",
     },
     {
       title: "Styles N Tunes",
@@ -218,7 +208,6 @@ export default function ProjectsPage() {
       timeline: "3 weeks",
       role: "Frontend Developer",
       color: "from-purple-500 to-pink-500",
-      bgImage: "/images/projects/styles-tunes-bg.jpg",
     },
     {
       title: "GreenLeaf Dispensary",
@@ -238,7 +227,6 @@ export default function ProjectsPage() {
       timeline: "4 weeks",
       role: "Full Stack Developer",
       color: "from-green-500 to-emerald-500",
-      bgImage: "/images/projects/greenleaf-bg.jpg",
     },
     {
       title: "AgriInfo Offline App",
@@ -258,7 +246,6 @@ export default function ProjectsPage() {
       timeline: "5 weeks",
       role: "Full Stack Developer",
       color: "from-green-600 to-teal-500",
-      bgImage: "/images/projects/agriinfo-bg.jpg",
     },
     {
       title: "Modeling & Services Portfolio",
@@ -278,7 +265,6 @@ export default function ProjectsPage() {
       timeline: "2 weeks",
       role: "Full Stack Developer",
       color: "from-blue-500 to-cyan-500",
-      bgImage: "/images/projects/modeling-bg.jpg",
     },
     {
       title: "FinTech Mobile Application",
@@ -297,7 +283,6 @@ export default function ProjectsPage() {
       timeline: "6+ weeks",
       role: "Mobile Developer",
       color: "from-indigo-500 to-blue-500",
-      bgImage: "/images/projects/fintech-bg.jpg",
     },
     {
       title: "EcoTrack Sustainability App",
@@ -317,7 +302,6 @@ export default function ProjectsPage() {
       timeline: "5 weeks",
       role: "Mobile Developer",
       color: "from-emerald-500 to-green-500",
-      bgImage: "/images/projects/ecotrack-bg.jpg",
     },
     {
       title: "Portfolio 2024",
@@ -337,7 +321,6 @@ export default function ProjectsPage() {
       timeline: "3 weeks",
       role: "Designer & Developer",
       color: "from-primary-500 to-secondary-500",
-      bgImage: "/images/projects/portfolio-bg.jpg",
     },
   ];
 
